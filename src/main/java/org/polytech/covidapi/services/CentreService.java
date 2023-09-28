@@ -1,6 +1,7 @@
 package org.polytech.covidapi.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.polytech.covidapi.entities.Centre;
 import org.polytech.covidapi.repositories.CentreRepository;
@@ -14,6 +15,10 @@ public class CentreService {
     
     public List<Centre> getCentresByCity(String ville) {
         return centreRepository.findAllByVille(ville);
+    }
+
+    public Optional<Centre> getCentreById(Integer id) {
+        return centreRepository.findById(id);
     }
 }
 

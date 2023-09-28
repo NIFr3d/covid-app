@@ -19,4 +19,5 @@ public class PublicController {
     public List<Centre> getCentresByCity(@RequestParam("city") String city){
         return centreService.getCentresByCity(city);
     }
+    
 }
