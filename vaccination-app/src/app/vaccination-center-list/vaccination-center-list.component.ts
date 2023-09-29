@@ -14,6 +14,8 @@ export class VaccinationCenterListComponent implements OnInit{
   centers!: VaccinationCenter[];
 
   ngOnInit(): void {
-    this.centers = this.vaccinationService.getAllVaccinationCenters();
+    this.vaccinationService.getAllVaccinationCenters().subscribe((centers) => {
+      this.centers = centers;
+    });
   }
 }

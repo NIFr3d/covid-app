@@ -20,6 +20,10 @@ public class CentreService {
     public Optional<Centre> getCentreById(Integer id) {
         return centreRepository.findById(id);
     }
+
+    public List<Centre> getCentres() {
+        return centreRepository.findAll();
+    }
 }
 
 

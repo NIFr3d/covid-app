@@ -17,14 +17,16 @@ export class VaccinationCenterComponent implements OnInit{
 
   ngOnInit(): void {  
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.center = this.vaccinationService.getCenterById(id);
+    this.vaccinationService.getCenterById(id).subscribe((center) => {
+      this.center = center;
+    });
   }
 
   clearName(center: VaccinationCenter) {
-    center.name = '';
+    center.nom = '';
   }
   isNameNotEmpty(center: VaccinationCenter) {
-    return center.name.length != 0;
+    return center.nom.length != 0;
   }
   delete() {
     delete this.center;

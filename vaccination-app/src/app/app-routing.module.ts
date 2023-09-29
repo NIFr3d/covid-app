@@ -5,7 +5,7 @@ import { VaccinationCenterListComponent } from './vaccination-center-list/vaccin
 
 const routes: Routes = [
   {path:"centers", component: VaccinationCenterListComponent},
-  {path:"centers/:id", component: VaccinationCenterComponent},
+  {path:"center/:id", component: VaccinationCenterComponent},
   {path:"", redirectTo:"/centers", pathMatch:"full"}
 ];
 

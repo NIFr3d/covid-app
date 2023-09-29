@@ -1,30 +1,28 @@
 import { Injectable } from '@angular/core';
 import { VaccinationCenter } from './vaccination-center/vaccination-center';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VaccinationService {
-  getCenterById(id: number): VaccinationCenter | undefined {
-    return this.centers.find(center => center.id == id);
-  }
-  centers: VaccinationCenter[] = [{
-    id: 1,
-    name: 'Hopital de Metz',
-    address: '12 Rue de la Vieille Boucherie',
-    postalCode: '57000',
-    city: 'Metz'
-  },
-  {
-    id: 2,
-    name: 'Hopital de Nancy',
-    address: '29 Avenue du Maréchal de Lattre de Tassigny',
-    postalCode: '54000',
-    city: 'Nancy'
-  }];
+  constructor(private httpClient : HttpClient) { }
 
-  constructor() { }
-  getAllVaccinationCenters() {
-    return this.centers;
+
+  getCenterById(id: number): Observable<VaccinationCenter> {
+    return this.httpClient.get<VaccinationCenter>("/api/center/"+id);
+  }
+
+  getVaccinationCentersByCity(city:string) : Observable<VaccinationCenter[]> {
+    return this.httpClient.get<VaccinationCenter[]>("/api/centers/getByCity",{
+      params:{
+        "city": city
+      }
+    });
+  }
+
+  getAllVaccinationCenters() : Observable<VaccinationCenter[]> {
+    return this.httpClient.get<VaccinationCenter[]>("/api/centers");
   }
 }

@@ -10,6 +10,8 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Utilisateur {
+    public Utilisateur() {
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

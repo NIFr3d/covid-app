@@ -10,6 +10,8 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Role {
+    public Role() {
+    }
     public Role(String denomination) {
         this.denomination = denomination;
     }
