@@ -10,14 +10,18 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Centre {
-    public Centre(String nom, String ville) {
+    public Centre(String nom, String ville, String adresse, String codePostal) {
         this.nom = nom;
         this.ville = ville;
+        this.adresse = adresse;
+        this.codePostal = codePostal;
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nom;
+    private String adresse;
+    private String codePostal;
     private String ville;
     @OneToMany(mappedBy = "centre")
     private List<Utilisateur> utilisateurs;

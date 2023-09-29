@@ -1,0 +1,7 @@
+<h1>Vaccination centers</h1>
+
+<ul *ngFor="let center of centers">
+    <!-- <li [title]="center.name" [ngClass]="selected==center? 'selected' : ''">
+        <button (click)="selectCenter(center)">{{center.name}}</button></li> -->
+    <a routerLink="/centers/{{center.id}}">{{center.name}}</a>
+</ul>

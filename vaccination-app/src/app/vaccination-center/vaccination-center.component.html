@@ -1,4 +1,11 @@
-<div>
-    <h2>{{center.name}}</h2>
-    <div>{{center.address}} <span>{{center.postalCode}} {{center.city}}</span></div>
+
+
+<div *ngIf="center">{{center.address}} <span>{{center.postalCode}} {{center.city}}</span>
+    <div>
+        <label for="name">Name: </label>
+        <input type="text" id="name" [(ngModel)]="center.name"/>
+        <button (click)="clearName(center)" *ngIf="isNameNotEmpty(center)">Clear name</button>
+        <button (click)="delete()">Supprimer</button>
+    </div>
 </div>
+

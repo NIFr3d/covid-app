@@ -30,8 +30,8 @@ public class CovidApiApplication {
 			Role role2 = new Role("Utilisateur");
 			roleRepository.save(role1);
 			roleRepository.save(role2);
-			Centre centre1 = new Centre("Centre de Metz", "Metz");
-			Centre centre2 = new Centre("Centre de Nancy", "Nancy");
+			Centre centre1 = new Centre("Hopital Central", "Metz", "12 rue de la Paix", "57000");
+			Centre centre2 = new Centre("Centre hospitalier", "Nancy", "21 rue de la Republique", "54000");
 			centreRepository.save(centre1);
 			centreRepository.save(centre2);
 		};
