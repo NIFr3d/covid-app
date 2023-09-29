@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "covid-angular": {
+    "vaccination-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/covid-angular",
+            "outputPath": "dist/vaccination-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "covid-angular:build:production"
+              "browserTarget": "vaccination-app:build:production"
             },
             "development": {
-              "browserTarget": "covid-angular:build:development"
+              "browserTarget": "vaccination-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "covid-angular:build"
+            "browserTarget": "vaccination-app:build"
           }
         },
         "test": {
