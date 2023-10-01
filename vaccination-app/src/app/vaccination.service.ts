@@ -11,11 +11,11 @@ export class VaccinationService {
 
 
   getCenterById(id: number): Observable<VaccinationCenter> {
-    return this.httpClient.get<VaccinationCenter>("/api/center/"+id);
+    return this.httpClient.get<VaccinationCenter>("/api/public/center/"+id);
   }
 
   getVaccinationCentersByCity(city:string) : Observable<VaccinationCenter[]> {
-    return this.httpClient.get<VaccinationCenter[]>("/api/centers/getByCity",{
+    return this.httpClient.get<VaccinationCenter[]>("/api/public/centers/getByCity",{
       params:{
         "city": city
       }
@@ -23,6 +23,6 @@ export class VaccinationService {
   }
 
   getAllVaccinationCenters() : Observable<VaccinationCenter[]> {
-    return this.httpClient.get<VaccinationCenter[]>("/api/centers");
+    return this.httpClient.get<VaccinationCenter[]>("/api/public/centers");
   }
 }
