@@ -12,23 +12,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
      private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, UserDetailsService userDetailsService) throws Exception {
-        http
-        .authorizeHttpRequests((authz) -> authz.anyRequest().authenticated())
-        .httpBasic(withDefaults())
-                .cors().disable()
-                .csrf().disable() //Desactivation de la protection csrf
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//On rend les session stateless
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+       http.authorizeHttpRequests((auth) -> auth
+                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/private/**").authenticated()
+                )
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);//On rend les session stateless
         return http.build();
-    }
+}
 
     @Bean
     public PasswordEncoder passwordEncoder() {
