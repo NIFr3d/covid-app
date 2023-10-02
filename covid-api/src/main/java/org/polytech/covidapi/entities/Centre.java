@@ -32,7 +32,5 @@ public class Centre {
     private String codePostal;
     @JsonProperty("ville")
     private String ville;
-    
-    @OneToMany(mappedBy = "centre")
-    private List<Utilisateur> utilisateurs;
+
 }

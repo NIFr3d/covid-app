@@ -1,7 +1,6 @@
 package org.polytech.covidapi;
 
 
-import org.checkerframework.checker.units.qual.A;
 import org.polytech.covidapi.entities.Centre;
 import org.polytech.covidapi.repositories.CentreRepository;
 import org.springframework.beans.factory.annotation.Autowired;

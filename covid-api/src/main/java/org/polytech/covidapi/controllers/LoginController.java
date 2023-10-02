@@ -18,17 +18,13 @@ public class LoginController {
     private CentreService centreService;
     
     @PostMapping(path = "/register")
-    public void register(@RequestParam String mail, @RequestParam String nom, @RequestParam String prenom, @RequestParam String telephone, @RequestParam String password, @RequestParam Integer centreId) {
-        if(centreService.getCentreById(centreId).isEmpty()) {
-            throw new IllegalArgumentException("Centre not found");
-        }
+    public void register(@RequestParam String mail, @RequestParam String nom, @RequestParam String prenom, @RequestParam String telephone, @RequestParam String password) {
         Utilisateur utilisateur = new Utilisateur(
             mail,
             nom,
             prenom,
             telephone,
-            password,
-            centreService.getCentreById(centreId).get()
+            password
         );  
         utilisateurService.addUser(utilisateur);
     }
