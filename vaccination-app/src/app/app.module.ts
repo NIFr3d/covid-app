@@ -4,11 +4,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { VaccinationCenterComponent } from './vaccination-center/vaccination-center.component';
+import { VaccinationCenterComponent } from './component/vaccination-center/vaccination-center.component';
 import { FormsModule } from '@angular/forms';
-import { VaccinationCenterListComponent } from './vaccination-center-list/vaccination-center-list.component';
-import { IndexComponent } from './index/index.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { VaccinationCenterListComponent } from './component/vaccination-center-list/vaccination-center-list.component';
+import { IndexComponent } from './component/index/index.component';
+import { NavbarComponent } from './component/navbar/navbar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

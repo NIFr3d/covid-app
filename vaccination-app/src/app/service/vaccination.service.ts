@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { VaccinationCenter } from './vaccination-center/vaccination-center';
+import { VaccinationCenter } from '../component/vaccination-center/vaccination-center';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
