@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule} from '@angular/material/card';
+import { MatFormFieldModule} from '@angular/material/form-field';
 
 import { AppComponent } from './app.component';
 import { VaccinationCenterComponent } from './component/vaccination-center/vaccination-center.component';
@@ -28,6 +30,8 @@ import { HomeComponent } from './component/home/home.component';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

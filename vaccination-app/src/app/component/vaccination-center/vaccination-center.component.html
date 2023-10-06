@@ -1,11 +1,19 @@
-
-
-<div *ngIf="center">{{center.adresse}} <span>{{center.codePostal}} {{center.ville}}</span>
-    <div>
-        <label for="nom">Nom : </label>
-        <input type="text" id="nom" [(ngModel)]="center.nom"/>
-        <button (click)="clearName(center)" *ngIf="isNameNotEmpty(center)">Effacer nom</button>
-        <button (click)="delete()">Supprimer</button>
-    </div>
-</div>
-
+<form (ngSubmit)="saveChanges()" #editForm="ngForm">
+    <mat-form-field>
+        <mat-label>Nom</mat-label>
+        <input matInput placeholder="Nom" [(ngModel)]="center.nom" name="nom" required>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Adresse</mat-label>
+        <input matInput placeholder="Adresse" [(ngModel)]="center.adresse" name="adresse" required>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Code postal</mat-label>
+        <input matInput placeholder="Code postal" [(ngModel)]="center.codePostal" name="codePostal" required>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Ville</mat-label>
+        <input matInput placeholder="Ville" [(ngModel)]="center.ville" name="ville" required>
+    </mat-form-field>
+    <button mat-button type="submit" [disabled]="!editForm.form.valid">Sauvegarder</button>
+</form>

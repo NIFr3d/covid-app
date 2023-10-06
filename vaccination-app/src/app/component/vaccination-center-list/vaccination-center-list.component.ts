@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VaccinationCenter } from '../vaccination-center/vaccination-center';
+import { VaccinationCenter } from '../../entities/vaccination-center';
 import { VaccinationService } from '../../service/vaccination.service';
 
 @Component({

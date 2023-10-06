@@ -24,6 +24,10 @@ public class CentreService {
     public List<Centre> getCentres() {
         return centreRepository.findAll();
     }
+    
+    public void saveCentre(Centre centre){
+        centreRepository.save(centre);
+    }
 }
 
 

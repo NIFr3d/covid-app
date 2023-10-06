@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { VaccinationCenter } from './vaccination-center';
+import { VaccinationCenter } from '../../entities/vaccination-center';
 import { ActivatedRoute } from '@angular/router';
 import { VaccinationService } from '../../service/vaccination.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vaccination-center',
@@ -11,9 +12,11 @@ import { VaccinationService } from '../../service/vaccination.service';
 export class VaccinationCenterComponent implements OnInit{
 
 
-  center?: VaccinationCenter;
+  center!: VaccinationCenter;
 
-  constructor(private route: ActivatedRoute, private vaccinationService : VaccinationService) { }
+  constructor(private route: ActivatedRoute, 
+              private vaccinationService : VaccinationService,
+              private router: Router) { }
 
   ngOnInit(): void {  
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -21,14 +24,14 @@ export class VaccinationCenterComponent implements OnInit{
       this.center = center;
     });
   }
-
-  clearName(center: VaccinationCenter) {
-    center.nom = '';
-  }
-  isNameNotEmpty(center: VaccinationCenter) {
-    return center.nom.length != 0;
+  saveChanges() {
+    this.vaccinationService.saveVaccinationCenter(this.center).subscribe(() => {
+      this.router.navigateByUrl('/centers');
+    });
   }
   delete() {
-    delete this.center;
+    this.vaccinationService.deleteVaccinationCenter(this.center.id).subscribe(() => {
+      this.router.navigateByUrl('/centers');
+    });
   }
 }
