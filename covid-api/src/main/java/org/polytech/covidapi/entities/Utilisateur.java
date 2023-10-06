@@ -44,5 +44,13 @@ public class Utilisateur {
         this.reservations = new ArrayList<Reservation>();
         this.roles = List.of("USER");
     }
-
+    public String getMail() {
+        return this.mail;
+    }
+    public String getPassword() {
+        return this.password;
+    }
+    public List<String> getRoles() {
+        return this.roles;
+    }
 }

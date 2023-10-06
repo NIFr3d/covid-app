@@ -27,7 +27,7 @@ export class VaccinationService {
   }
 
   saveVaccinationCenter(vaccinationCenter: VaccinationCenter) : Observable<VaccinationCenter> {
-    return this.httpClient.post<VaccinationCenter>("/api/admin/center", vaccinationCenter);
+    return this.httpClient.post<VaccinationCenter>("/api/private/center", vaccinationCenter);
   }
 
   deleteVaccinationCenter(id: number) : Observable<void> {
