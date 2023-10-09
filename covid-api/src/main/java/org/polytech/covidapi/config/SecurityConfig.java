@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,24 +20,28 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+import org.polytech.covidapi.services.UtilisateurService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Autowired
-    private UserDetailsService userDetailsService;
-    
+    private UtilisateurService utilisateurService;
+
     @Bean
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
-    }
-    
-    @Bean
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authz -> authz.requestMatchers("/api/auth/**").permitAll().anyRequest().authenticated() )
+    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authz -> authz
+        .requestMatchers("/api/auth/**").permitAll()
+        .requestMatchers("/api/public").permitAll()
+        .requestMatchers("/api/user/**").hasRole("USER")
+        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+        .anyRequest().authenticated() )
             .httpBasic(withDefaults())
             .cors(cors -> cors.disable())
             .csrf(csrf -> csrf.disable());
+            
+        return http.build();
     }
 
     @Bean
@@ -44,4 +49,10 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(utilisateurService).passwordEncoder(bCryptPasswordEncoder);
+        return authenticationManagerBuilder.build();
+    }
 }
