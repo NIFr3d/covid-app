@@ -6,6 +6,7 @@ import java.util.List;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +27,7 @@ public class Utilisateur {
     private boolean isVaccine;
     private String password;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
     @OneToMany(mappedBy = "utilisateur")
@@ -52,5 +53,8 @@ public class Utilisateur {
     }
     public List<String> getRoles() {
         return this.roles;
+    }
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }

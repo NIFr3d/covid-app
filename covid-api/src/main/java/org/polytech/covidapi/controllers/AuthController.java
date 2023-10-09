@@ -15,5 +15,13 @@ public class AuthController {
     @Autowired
     private UtilisateurService utilisateurService;
     
+    @PostMapping(path = "/register")
+    public ResponseEntity<?> register(@RequestParam String mail, @RequestParam String password, @RequestParam String nom, @RequestParam String prenom, @RequestParam String telephone){
+        if(utilisateurService.findByMail(mail).isPresent()){
+            return ResponseEntity.badRequest().build();
+        }
+        utilisateurService.addUser(mail, password, nom, prenom, telephone);
+        return ResponseEntity.ok().build();
+    }
 
 }
