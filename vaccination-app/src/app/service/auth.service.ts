@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -14,7 +14,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     const body = { email, password };
-    return this.http.post('/api/auth/login', body);
+    return this.http.post('/api/auth/login', body, {headers: new HttpHeaders({ 'Content-Type': 'application/json' })});
   }
 
   logout(): Observable<any> {

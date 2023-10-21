@@ -28,7 +28,7 @@ public class Utilisateur {
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles;
+    private List<ERole> roles;
 
     @OneToMany(mappedBy = "utilisateur")
     private List<Reservation> reservations;
@@ -43,7 +43,7 @@ public class Utilisateur {
         this.dateInscription = new Date(System.currentTimeMillis());
         this.isVaccine = false;
         this.reservations = new ArrayList<Reservation>();
-        this.roles = List.of("USER");
+        this.roles = List.of(ERole.USER);
     }
     public String getMail() {
         return this.mail;
@@ -51,10 +51,13 @@ public class Utilisateur {
     public String getPassword() {
         return this.password;
     }
-    public List<String> getRoles() {
+    public List<ERole> getRoles() {
         return this.roles;
     }
-    public void setRoles(List<String> roles) {
+    public void setRoles(List<ERole> roles) {
         this.roles = roles;
+    }
+    public int getId() {
+        return this.id;
     }
 }

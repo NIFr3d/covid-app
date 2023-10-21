@@ -4,25 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import static org.springframework.security.config.Customizer.withDefaults;
-
-import java.io.IOException;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.polytech.covidapi.config.jwt.AuthEntryPointJwt;
+import org.polytech.covidapi.config.jwt.AuthTokenFilter;
+import org.polytech.covidapi.entities.ERole;
 import org.polytech.covidapi.services.UtilisateurService;
 
 @Configuration
@@ -32,66 +25,62 @@ public class SecurityConfig {
     @Autowired
     private UtilisateurService utilisateurService;
 
-    @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authz -> authz
-        .requestMatchers("/api/auth/**").permitAll()
-        .requestMatchers("/api/public").permitAll()
-        .requestMatchers("/api/user/**").hasRole("USER")
-        .requestMatchers("/api/private/**").hasRole("ADMIN")
-        
-        .anyRequest().authenticated() )
-        .formLogin(formLogin -> formLogin.loginPage("/api/auth/login")
-                                        .usernameParameter("username")
-                                        .passwordParameter("password")
-                                        .successHandler(successHandler())
-                                        .failureHandler(failureHandler())
-                                        .permitAll())
-        .logout(logout -> logout.logoutUrl("/api/auth/logout"))
-            .httpBasic(withDefaults())
-            .cors(cors -> cors.disable())
-            .csrf(csrf -> csrf.disable());
-            
-        return http.build();
-    }
+    @Autowired
+    private AuthEntryPointJwt unauthorizedHandler;
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    public PasswordEncoder getPasswordEncoder() {
-        return passwordEncoder();
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(utilisateurService).passwordEncoder(bCryptPasswordEncoder);
-        return authenticationManagerBuilder.build();
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        
+        authProvider.setUserDetailsService(utilisateurService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+    
+        return authProvider;
     }
 
-    private AuthenticationSuccessHandler successHandler() {
-    return new AuthenticationSuccessHandler() {
-        @Override
-        public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
-                HttpServletResponse httpServletResponse, Authentication authentication)
-                throws IOException, ServletException {
-            httpServletResponse.getWriter().append("OK");
-            httpServletResponse.setStatus(200);
-        }
-    };
-}
 
-private AuthenticationFailureHandler failureHandler() {
-    return new AuthenticationFailureHandler() {
-        @Override
-        public void onAuthenticationFailure(HttpServletRequest httpServletRequest,
-                HttpServletResponse httpServletResponse, AuthenticationException e)
-                throws IOException, ServletException {
-            httpServletResponse.getWriter().append("Authentication failure");
-            httpServletResponse.setStatus(401);
-        }
-    };
-}
+    @Bean
+    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authz -> authz
+        .requestMatchers("/api/auth/**").permitAll()
+        .requestMatchers("/api/public").permitAll()
+        .requestMatchers("/api/user/**").hasRole(ERole.USER.toString())
+        .requestMatchers("/api/private/**").hasRole(ERole.ADMIN.toString())
+        .anyRequest().authenticated())
+        .csrf(csrf -> csrf.disable())
+        .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+;
+        
+        http.authenticationProvider(authenticationProvider());
+
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
+
+
+    // @Bean
+    // public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder) throws Exception {
+    //     AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+    //     authenticationManagerBuilder.userDetailsService(utilisateurService).passwordEncoder(bCryptPasswordEncoder);
+    //     return authenticationManagerBuilder.build();
+    // }
+
 }

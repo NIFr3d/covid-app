@@ -8,10 +8,10 @@
         <form (ngSubmit)="onSubmit()">
             <mat-form-field>
                 <mat-label>E-Mail</mat-label>
-                <input matInput placeholder="E-Mail" name="email">
+                <input matInput placeholder="E-Mail" [(ngModel)]="credentials.email" name="email">
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Mot de passe" name="password" type="password">
+                <input matInput placeholder="Mot de passe" [(ngModel)]="credentials.password" name="password" type="password">
             </mat-form-field>
             <button mat-raised-button color="primary" type="submit">Se connecter</button>
         </form>

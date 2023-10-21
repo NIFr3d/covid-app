@@ -32,7 +32,11 @@ public class UtilisateurService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return utilisateurRepository.findByMail(username).map(utilisateur -> new User(utilisateur.getMail(), utilisateur.getPassword(), utilisateur.getRoles().stream().map(SimpleGrantedAuthority::new).toList())).orElseThrow(()-> new UsernameNotFoundException("Utilisateur non trouvé"));
+        return utilisateurRepository.findByMail(username)
+                .map(utilisateur -> new User(utilisateur.getMail(), 
+                                             utilisateur.getPassword(), 
+                                             utilisateur.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.toString())).toList()))
+                .orElseThrow(()-> new UsernameNotFoundException("Utilisateur non trouvé"));
     }
 
     public Optional<Utilisateur> findByMail(String mail) {
