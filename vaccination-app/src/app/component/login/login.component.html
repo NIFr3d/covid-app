@@ -5,14 +5,17 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
+        <p *ngIf="loginError"><span>
+            <mat-icon>error</mat-icon>
+            {{errorMessage}}</span></p>
         <form (ngSubmit)="onSubmit()">
             <mat-form-field>
                 <mat-label>E-Mail</mat-label>
-                <input matInput placeholder="E-Mail" [(ngModel)]="credentials.email" name="email">
-            </mat-form-field>
+                <input matInput placeholder="E-Mail" [(ngModel)]="credentials.email" name="email"/>
+            </mat-form-field><br>
             <mat-form-field>
-                <input matInput placeholder="Mot de passe" [(ngModel)]="credentials.password" name="password" type="password">
-            </mat-form-field>
+                <input matInput placeholder="Mot de passe" [(ngModel)]="credentials.password" name="password" type="password"/>
+            </mat-form-field><br>
             <button mat-raised-button color="primary" type="submit">Se connecter</button>
         </form>
     </mat-card-content>

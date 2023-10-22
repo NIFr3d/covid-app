@@ -26,9 +26,7 @@ public class PublicController {
 
     @GetMapping(path = "/centers")
     public List<Centre> getCentres(){
-        var centres = centreService.getCentres();
-        var test = 2;
-        return centres;
+        return centreService.getCentres();
     }
     @GetMapping(path = "/center/{id}")
     public Optional<Centre> getCentreById(@PathVariable Integer id){

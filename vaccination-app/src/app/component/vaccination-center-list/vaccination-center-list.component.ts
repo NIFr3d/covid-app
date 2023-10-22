@@ -13,9 +13,20 @@ export class VaccinationCenterListComponent implements OnInit{
 
   centers!: VaccinationCenter[];
 
+  filteredCenters!: VaccinationCenter[];
+
+  searchText: string = "";
+
   ngOnInit(): void {
     this.vaccinationService.getAllVaccinationCenters().subscribe((centers) => {
       this.centers = centers;
+      this.filteredCenters = centers;
+    });
+  }
+
+  updateList() : void {
+    this.filteredCenters = this.centers.filter((center) => {
+      return center.nom.toLowerCase().includes(this.searchText?.toLowerCase() ?? '');
     });
   }
 }

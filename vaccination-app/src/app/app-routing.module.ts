@@ -4,12 +4,15 @@ import { VaccinationCenterComponent } from './component/vaccination-center/vacci
 import { VaccinationCenterListComponent } from './component/vaccination-center-list/vaccination-center-list.component';
 import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
+import { StorageService } from './service/storage.service';
+import { ContactComponent } from './component/contact/contact.component';
 
 const routes: Routes = [
   {path:"centers", component: VaccinationCenterListComponent},
   {path:"center/:id", component: VaccinationCenterComponent},
   {path:"home", component: HomeComponent},
   {path:"login", component: LoginComponent},
+  {path:"contact", component: ContactComponent},
   {path:"", redirectTo:"/home", pathMatch:"full"}
 ];
 

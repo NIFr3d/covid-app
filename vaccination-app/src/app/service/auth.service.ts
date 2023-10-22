@@ -17,7 +17,4 @@ export class AuthService {
     return this.http.post('/api/auth/login', body, {headers: new HttpHeaders({ 'Content-Type': 'application/json' })});
   }
 
-  logout(): Observable<any> {
-    return this.http.post('/api/auth/logout', {});
-  }
 }

@@ -1,4 +1,19 @@
-<h1>Vaccination centers</h1>
-<ul *ngFor="let center of centers">
-    <a routerLink="/center/{{center.id}}">{{center.nom}}</a>
-</ul>
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h4>Liste des centres de vaccination</h4>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field>
+                <input type="tel" matInput placeholder="Rechercher" name="search" [(ngModel)]= "searchText" (ngModelChange)="updateList()">
+                <button matSuffix mat-button><mat-icon >search</mat-icon></button>
+            </mat-form-field>
+            <br>
+            <ul *ngFor="let center of filteredCenters">
+                <a routerLink="/center/{{center.id}}">{{center.nom}}</a>
+            </ul>
+        </mat-card-content>
+    </mat-card>
+</div>

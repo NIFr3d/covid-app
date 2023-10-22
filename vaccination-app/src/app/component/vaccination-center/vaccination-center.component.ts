@@ -24,14 +24,4 @@ export class VaccinationCenterComponent implements OnInit{
       this.center = center;
     });
   }
-  saveChanges() {
-    this.vaccinationService.saveVaccinationCenter(this.center).subscribe(() => {
-      this.router.navigateByUrl('/centers');
-    });
-  }
-  delete() {
-    this.vaccinationService.deleteVaccinationCenter(this.center.id).subscribe(() => {
-      this.router.navigateByUrl('/centers');
-    });
-  }
 }

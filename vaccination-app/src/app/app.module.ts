@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule} from '@angular/material/card';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { MatIconModule} from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { VaccinationCenterComponent } from './component/vaccination-center/vaccination-center.component';
@@ -17,6 +18,7 @@ import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { ContactComponent } from './component/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     VaccinationCenterListComponent,
     HomeComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

@@ -24,7 +24,7 @@ export class StorageService {
     return null;
   }
 
-  public isLogged() : boolean {
+  public isLoggedIn() : boolean {
     return this.getUser() !== null;
   }
 }

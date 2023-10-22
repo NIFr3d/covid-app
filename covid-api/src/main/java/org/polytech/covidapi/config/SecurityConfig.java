@@ -54,7 +54,7 @@ public class SecurityConfig {
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authz -> authz
         .requestMatchers("/api/auth/**").permitAll()
-        .requestMatchers("/api/public").permitAll()
+        .requestMatchers("/api/public/**").permitAll()
         .requestMatchers("/api/user/**").hasRole(ERole.USER.toString())
         .requestMatchers("/api/private/**").hasRole(ERole.ADMIN.toString())
         .anyRequest().authenticated())

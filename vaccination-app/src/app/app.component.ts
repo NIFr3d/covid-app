@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StorageService } from './service/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
   title = 'vaccination-app';
+  isLoggedIn = this.StorageService.isLoggedIn();
+
+  constructor(private StorageService : StorageService) {
+  }
+
+  logout() : void {
+    this.StorageService.clean();
+    location.replace('/');
+  }
+
 }

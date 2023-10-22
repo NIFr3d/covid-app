@@ -1,20 +1,17 @@
-<form (ngSubmit)="saveChanges()" #editForm="ngForm">
-    <mat-form-field>
-        <mat-label>Nom</mat-label>
-        <input matInput placeholder="Nom" [(ngModel)]="center.nom" name="nom" required>
-    </mat-form-field>
-    
-    <mat-form-field>
-        <mat-label>Adresse</mat-label>
-        <input matInput placeholder="Adresse" [(ngModel)]="center.adresse" name="adresse" required>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Code postal</mat-label>
-        <input matInput placeholder="Code postal" [(ngModel)]="center.codePostal" name="codePostal" required>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Ville</mat-label>
-        <input matInput placeholder="Ville" [(ngModel)]="center.ville" name="ville" required>
-    </mat-form-field>
-    <button mat-button type="submit" [disabled]="!editForm.form.valid">Sauvegarder</button>
-</form>
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h4>Informations du centre de vaccination</h4>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <button mat-raised-button color="primary" routerLink="/centers">Réserver un rendez-vous</button>
+            <p>Nom du centre : {{center.nom}}</p>
+            <p>Adresse : {{center.adresse}}</p>
+            <p>Code postal : {{center.codePostal}}</p>
+            <p>Ville : {{center.ville}}</p>
+            <button mat-raised-button color="primary" routerLink="/centers">Retour</button>
+        </mat-card-content>
+    </mat-card>
+</div>

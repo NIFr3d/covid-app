@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private storageService : StorageService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if(this.storageService.isLogged()){
+    if(this.storageService.isLoggedIn()){
       request = request.clone({
         headers: request.headers.set("Authorization",
           "Bearer " + this.storageService.getUser().accessToken)
