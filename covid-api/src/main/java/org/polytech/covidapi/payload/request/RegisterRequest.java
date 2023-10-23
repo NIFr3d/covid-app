@@ -23,6 +23,7 @@ public class RegisterRequest {
 
   @NotBlank
   @Size(max = 50)
+  @Pattern(regexp = "^(0|\\+33|0033)[1-9][0-9]{8}$")
   private String telephone;
 
 

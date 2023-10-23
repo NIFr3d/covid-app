@@ -1,0 +1,57 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+        <h4>Inscription</h4>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p *ngIf="registerError"><span>
+            <mat-icon>error</mat-icon>
+            {{errorMessage}}</span>
+        </p>
+        <form (ngSubmit)="onSubmit()">
+            <mat-form-field>
+                <mat-label>E-Mail</mat-label>
+                <input matInput placeholder="E-Mail" [(ngModel)]="credentials.email" name="email"/>
+            </mat-form-field><br>
+            <mat-form-field>
+                <mat-label>Nom</mat-label>
+                <input matInput placeholder="Nom" [(ngModel)]="credentials.nom" name="name"/>
+            </mat-form-field><br>
+            <mat-form-field>
+                <mat-label>Prénom</mat-label>
+                <input matInput placeholder="Prénom" [(ngModel)]="credentials.prenom" name="firstname"/>
+            </mat-form-field><br>
+            <mat-form-field>
+                <mat-label>Téléphone</mat-label>
+                <input matInput placeholder="Téléphone" [(ngModel)]="credentials.telephone" (ngModelChange)="telephoneVerif()" name="phone" type="tel"/>
+            </mat-form-field><br>
+            <p>
+                <span *ngIf="telephoneError">
+                    <mat-icon>error</mat-icon>
+                    Le numéro de téléphone n'est pas valide<br>
+                </span>
+            </p>
+            <mat-form-field>
+                <input matInput placeholder="Mot de passe" [(ngModel)]="credentials.password" (ngModelChange)="passVerif()" name="password"  type="password"/>
+            </mat-form-field><br>
+            <mat-form-field>
+                <input matInput placeholder="Confirmation du mot de passe" [(ngModel)]="credentials.password2" (ngModelChange)="passVerif()" name="password2" type="password"/>
+            </mat-form-field><br>
+            <p>
+                <span *ngIf="samePasswordError">
+                    <mat-icon>error</mat-icon>
+                    Les mots de passe ne correspondent pas<br>
+                </span>
+                <span *ngIf="passwordLengthError">
+                    <mat-icon>error</mat-icon>
+                    Le mot de passe doit faire au moins 6 caractères
+                </span>
+            </p>
+            <button mat-raised-button color="primary" type="submit" [disabled]="(samePasswordError || passwordLengthError)">S'inscrire</button>
+        </form>
+        <p>
+            <a routerLink="/login">Déjà inscrit ?</a>
+        </p>
+    </mat-card-content>
+</mat-card>

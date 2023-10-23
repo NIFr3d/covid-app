@@ -17,4 +17,9 @@ export class AuthService {
     return this.http.post('/api/auth/login', body, {headers: new HttpHeaders({ 'Content-Type': 'application/json' })});
   }
 
+  register(email: string, password: string, nom: string, prenom: string, telephone: string) {
+    const body = { email, password, nom, prenom, telephone };
+    return this.http.post('/api/auth/register', body, {headers: new HttpHeaders({ 'Content-Type': 'application/json' })});
+  }
+
 }

@@ -55,14 +55,14 @@ public class AuthController {
     @PostMapping(path = "/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest){
         if(utilisateurService.findByMail(registerRequest.getEmail()).isPresent()){
-            return ResponseEntity.badRequest().body("Email déjà utilisé");
+            return ResponseEntity.badRequest().body("{ \"message\": \"Email déjà utilisé\"}");
         }
         utilisateurService.addUser(registerRequest.getEmail(), 
                                    passwordEncoder.encode(registerRequest.getPassword()), 
                                    registerRequest.getNom(), registerRequest.getPrenom(), 
                                    registerRequest.getTelephone());
 
-        return ResponseEntity.ok().body("Utilisateur enrgistré avec succès");
+        return ResponseEntity.ok().body("{ \"message\": \"Utilisateur créé avec succès\"}");
     }
 
 }

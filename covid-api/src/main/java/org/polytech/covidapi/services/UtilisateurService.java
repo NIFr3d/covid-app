@@ -11,8 +11,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -20,13 +18,9 @@ import org.springframework.stereotype.Service;
 public class UtilisateurService implements UserDetailsService{
     @Autowired
     private UtilisateurRepository utilisateurRepository;
-
-    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder() {
-        
-    };
     
-    public void addUser(String mail, String password, String nom, String prenom, String telephone) {
-        Utilisateur utilisateur = new Utilisateur(mail, nom, prenom, telephone, passwordEncoder.encode(password));
+    public void addUser(String mail, String encodedPassword, String nom, String prenom, String telephone) {
+        Utilisateur utilisateur = new Utilisateur(mail, nom, prenom, telephone, encodedPassword);
         utilisateurRepository.save(utilisateur);
     }
 

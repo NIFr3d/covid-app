@@ -12,7 +12,7 @@ export class LoginComponent {
   loginError?: boolean;
   errorMessage?: string;
 
-  constructor(private AuthService: AuthService, private StorageService : StorageService) {
+  constructor(private authService: AuthService, private storageService : StorageService) {
   }
 
   onSubmit() {
@@ -21,9 +21,9 @@ export class LoginComponent {
       this.errorMessage = "L'email et le mot de passe sont obligatoires";
       return;
     }
-    this.AuthService.login(this.credentials.email, this.credentials.password).subscribe({
+    this.authService.login(this.credentials.email, this.credentials.password).subscribe({
       next : data => {
-        this.StorageService.saveUser(data);
+        this.storageService.saveUser(data);
         location.replace('/');
       },
       error : error => {
