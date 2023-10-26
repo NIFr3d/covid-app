@@ -66,4 +66,17 @@ public class Utilisateur {
     public String getPrenom() {
         return this.prenom;
     }
+    public String getTelephone() {
+        return this.telephone;
+    }
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+    
 }

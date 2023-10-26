@@ -36,4 +36,8 @@ public class UtilisateurService implements UserDetailsService{
     public Optional<Utilisateur> findByMail(String mail) {
         return utilisateurRepository.findByMail(mail);
     }
+
+    public void updateUser(Utilisateur utilisateur) {
+        utilisateurRepository.save(utilisateur);
+    }
 }

@@ -44,12 +44,4 @@ export class StorageService {
   public isLoggedIn() : boolean {
     return this.getUser() !== null;
   }
-
-  public getNom(){
-    return this.http.get('/api/auth/getNom');
-  }
-
-  public getPrenom(){
-    return this.http.get('/api/auth/getPrenom');
-  }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { StorageService } from './service/storage.service';
+import { AuthService } from './service/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,23 +10,21 @@ import { StorageService } from './service/storage.service';
 export class AppComponent {
 
   title = 'vaccination-app';
-  isLoggedIn = this.StorageService.isLoggedIn();
+  isLoggedIn = this.storageService.isLoggedIn();
   nom? : string;
   prenom? : string;
 
-  constructor(private StorageService : StorageService) {
+  constructor(private authService : AuthService, private storageService : StorageService) {
     if(this.isLoggedIn){
-      this.StorageService.getNom().subscribe((data : any) => {
+      this.authService.getUserInfos().subscribe((data : any) => {
         this.nom = data.nom;
-      });
-      this.StorageService.getPrenom().subscribe((data : any) => {
-        this.prenom = data.prenom.toString()[0] + '.';
+        this.prenom = data.prenom;
       });
     }
   }
 
   logout() : void {
-    this.StorageService.clean();
+    this.storageService.clean();
     location.replace('/');
   }
 

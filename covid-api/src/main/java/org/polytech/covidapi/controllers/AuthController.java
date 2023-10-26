@@ -66,20 +66,26 @@ public class AuthController {
         return ResponseEntity.ok().body("{ \"message\": \"Utilisateur créé avec succès\"}");
     }
 
-    @GetMapping(path = "/getNom")
-    public ResponseEntity<?> getNom(){
+    @GetMapping(path = "/getUserInfos")
+    public ResponseEntity<?> getUserInfos(){
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(utilisateurService.findByMail(user.getUsername()).isPresent()){
-            return ResponseEntity.ok().body("{ \"nom\": \""+ utilisateurService.findByMail(user.getUsername()).get().getNom()+"\"}");
+            Utilisateur utilisateur = utilisateurService.findByMail(user.getUsername()).get();
+            return ResponseEntity.ok().body("{ \"nom\": \""+ utilisateur.getNom()+"\", \"prenom\": \""+ utilisateur.getPrenom()+"\", \"telephone\": \""+ utilisateur.getTelephone()+"\", \"email\": \""+ utilisateur.getMail()+"\"}");
         }
         return ResponseEntity.badRequest().body("{ \"message\": \"Utilisateur non trouvé\"}");
     }
 
-    @GetMapping(path = "/getPrenom")
-    public ResponseEntity<?> getPrenom(){
+    @PostMapping(path = "/updateUserInfos")
+    public ResponseEntity<?> updateUserInfos(@Valid @RequestBody RegisterRequest registerRequest){
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(utilisateurService.findByMail(user.getUsername()).isPresent()){
-            return ResponseEntity.ok().body("{ \"prenom\": \""+ utilisateurService.findByMail(user.getUsername()).get().getPrenom()+"\"}");
+            Utilisateur utilisateur = utilisateurService.findByMail(user.getUsername()).get();
+            utilisateur.setNom(registerRequest.getNom());
+            utilisateur.setPrenom(registerRequest.getPrenom());
+            utilisateur.setTelephone(registerRequest.getTelephone());
+            utilisateurService.updateUser(utilisateur);
+            return ResponseEntity.ok().body("{ \"message\": \"Utilisateur mis à jour avec succès\"}");
         }
         return ResponseEntity.badRequest().body("{ \"message\": \"Utilisateur non trouvé\"}");
     }
