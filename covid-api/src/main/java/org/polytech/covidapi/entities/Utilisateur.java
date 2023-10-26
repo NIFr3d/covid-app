@@ -60,4 +60,10 @@ public class Utilisateur {
     public int getId() {
         return this.id;
     }
+    public String getNom() {
+        return this.nom;
+    }
+    public String getPrenom() {
+        return this.prenom;
+    }
 }

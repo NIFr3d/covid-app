@@ -8,6 +8,7 @@ import { MatCardModule} from '@angular/material/card';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 
 import { AppComponent } from './app.component';
 import { VaccinationCenterComponent } from './component/vaccination-center/vaccination-center.component';
@@ -20,6 +21,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ContactComponent } from './component/contact/contact.component';
 import { RegisterComponent } from './component/register/register.component';
+import { ProfileComponent } from './component/profile/profile.component';
+import { ErrorComponent } from './component/error/error.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import { RegisterComponent } from './component/register/register.component';
     HomeComponent,
     LoginComponent,
     ContactComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +48,8 @@ import { RegisterComponent } from './component/register/register.component';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

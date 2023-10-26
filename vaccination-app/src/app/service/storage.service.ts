@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class StorageService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   clean() : void {
     window.sessionStorage.clear();
@@ -24,7 +25,31 @@ export class StorageService {
     return null;
   }
 
+  public isMedecin() : boolean {
+    const user = this.getUser();
+    if (user) {
+      return user.roles.includes('MEDECIN');
+    }
+    return false;
+  }
+
+  public isAdmin() : boolean {
+    const user = this.getUser();
+    if (user) {
+      return user.roles.includes('ADMIN');
+    }
+    return false;
+  }
+
   public isLoggedIn() : boolean {
     return this.getUser() !== null;
+  }
+
+  public getNom(){
+    return this.http.get('/api/auth/getNom');
+  }
+
+  public getPrenom(){
+    return this.http.get('/api/auth/getPrenom');
   }
 }

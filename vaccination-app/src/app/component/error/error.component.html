@@ -1,0 +1,28 @@
+<div [ngSwitch]="error">
+    <mat-card *ngSwitchCase="404">
+        <mat-card-title>
+            <h2>Erreur 404</h2>
+        </mat-card-title>
+        <mat-card-content>
+            <p>La page que vous demandez n'existe pas </p>
+        </mat-card-content>
+    </mat-card>
+    <mat-card *ngSwitchCase="403">
+        <mat-card-title>
+            <h2>Erreur 403</h2>
+        </mat-card-title>
+        <mat-card-content>
+            <p>Vous n'avez pas accès à cette page </p>
+            <p>Vous pensez avoir accès ?</p>
+            <a routerLink="/login">Changer de compte</a>
+        </mat-card-content>
+    </mat-card>
+    <mat-card *ngSwitchDefault="">
+        <mat-card-title>
+            <h2>Erreur {{error}}</h2>
+        </mat-card-title>
+        <mat-card-content>
+            <p> Une erreur est survenue </p>
+        </mat-card-content>
+    </mat-card>
+</div>
