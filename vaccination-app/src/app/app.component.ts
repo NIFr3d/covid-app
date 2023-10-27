@@ -18,7 +18,7 @@ export class AppComponent {
     if(this.isLoggedIn){
       this.authService.getUserInfos().subscribe((data : any) => {
         this.nom = data.nom;
-        this.prenom = data.prenom;
+        this.prenom = data.prenom[0] + '.';
       });
     }
   }

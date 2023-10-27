@@ -8,12 +8,13 @@ import { AuthService } from 'src/app/service/auth.service';
 })
 export class ProfileComponent {
 
-  credentials = { email: '', password: '', password2:'' , nom: '', prenom: '', telephone: '' };
+  credentials = { email: '', oldPassword: '', password: '', password2:'' , nom: '', prenom: '', telephone: '' };
   samePasswordError = false;
   passwordLengthError = false;
   telephoneError = false;
   saveError = false;
   errorMessage?: string;
+  editPassword = false;
 
   constructor(private authService : AuthService) {
     authService.getUserInfos().subscribe((data : any) => {
@@ -38,6 +39,12 @@ export class ProfileComponent {
     else {
       this.passwordLengthError = false;
     }
+    if(this.credentials.oldPassword.length < 6) {
+      this.passwordLengthError = true;
+    }
+    else {
+      this.passwordLengthError = false;
+    }
   }
 
   telephoneVerif() : void {
@@ -50,11 +57,24 @@ export class ProfileComponent {
     }
   }
 
-  onSubmit () : void {
-    this.passVerif();
+  onSubmitInfos () : void {
     this.telephoneVerif();
-    if(!this.samePasswordError && !this.passwordLengthError && !this.telephoneError) {
-      this.authService.updateUserInfos(this.credentials.email, this.credentials.password, this.credentials.nom, this.credentials.prenom, this.credentials.telephone).subscribe({
+    if(!this.telephoneError) {
+      this.authService.updateUserInfos(this.credentials.email, this.credentials.nom, this.credentials.prenom, this.credentials.telephone).subscribe({
+        next : data => {
+          location.replace('/profile');
+        },
+        error : error => {
+          this.saveError = true;
+          this.errorMessage = error;
+        }
+      });
+    }
+  }
+  onSubmitPassword () : void {
+    this.passVerif();
+    if(!this.samePasswordError && !this.passwordLengthError) {
+      this.authService.updateUserPassword(this.credentials.oldPassword, this.credentials.password).subscribe({
         next : data => {
           location.replace('/profile');
         },

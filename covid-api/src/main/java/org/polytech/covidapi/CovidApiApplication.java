@@ -32,7 +32,7 @@ public class CovidApiApplication {
 		return args -> {
 			Centre centre1 = new Centre("Hopital Central", "Metz", "12 rue de la Paix", "57000");
 			Centre centre2 = new Centre("Centre hospitalier", "Nancy", "21 rue de la Republique", "54000");
-			Utilisateur admin = new Utilisateur("admin@admin.fr", "ADMIN", "Admin", "0606060606", passwordEncoder.encode("admin"));
+			Utilisateur admin = new Utilisateur("admin@admin.fr", "ADMIN", "Admin", "0606060606", passwordEncoder.encode("admin123"));
 			admin.setRoles(java.util.List.of(ERole.ADMIN, ERole.USER));
 			centreRepository.save(centre1);
 			centreRepository.save(centre2);

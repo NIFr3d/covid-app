@@ -78,5 +78,8 @@ public class Utilisateur {
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
+    public void setPassword(String encodedPassword) {
+        this.password = encodedPassword;
+    }
     
 }

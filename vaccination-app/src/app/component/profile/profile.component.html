@@ -9,7 +9,7 @@
             <mat-icon>error</mat-icon>
             {{errorMessage}}</span>
         </p>
-        <form (ngSubmit)="onSubmit()">
+        <form (ngSubmit)="onSubmitInfos()" *ngIf="!editPassword">
             <mat-form-field>
                 <mat-label>Nom</mat-label>
                 <input matInput placeholder="Nom" [(ngModel)]="credentials.nom" name="name"/>
@@ -28,10 +28,22 @@
                     Le numéro de téléphone n'est pas valide<br>
                 </span>
             </p>
+            <p>
+                <button mat-raised-button color="warn" type="submit" [disabled]="(telephoneError)">Sauvegarder</button>
+            </p>
+            <button mat-raised-button color="primary" type="button" (click)="editPassword = true; saveError = false">Modifier le mot de passe</button>
+        </form>
+        <form (ngSubmit)="onSubmitPassword()" *ngIf="editPassword">
             <mat-form-field>
+                <mat-label>Ancien mot de passe</mat-label>
+                <input matInput placeholder="Ancien mot de passe" [(ngModel)]="credentials.oldPassword" name="oldPassword"  type="password"/>
+            </mat-form-field><br>
+            <mat-form-field>
+                <mat-label>Nouveau mot de passe</mat-label>
                 <input matInput placeholder="Mot de passe" [(ngModel)]="credentials.password" (ngModelChange)="passVerif()" name="password"  type="password"/>
             </mat-form-field><br>
             <mat-form-field>
+                <mat-label>Confirmation du mot de passe</mat-label>
                 <input matInput placeholder="Confirmation du mot de passe" [(ngModel)]="credentials.password2" (ngModelChange)="passVerif()" name="password2" type="password"/>
             </mat-form-field><br>
             <p>
@@ -44,7 +56,10 @@
                     Le mot de passe doit faire au moins 6 caractères
                 </span>
             </p>
-            <button mat-raised-button color="primary" type="submit" [disabled]="(samePasswordError || passwordLengthError || telephoneError)">Modifier</button>
+            <p>
+                <button mat-raised-button color="warn" type="submit" [disabled]="(samePasswordError || passwordLengthError)">Modifier</button>
+            </p>
+            <button mat-raised-button color="primary" type="button" (click)="editPassword = false; saveError = false">Annuler</button>
         </form>
     </mat-card-content>
 </mat-card>
