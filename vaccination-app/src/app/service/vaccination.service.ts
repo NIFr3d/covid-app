@@ -11,11 +11,11 @@ export class VaccinationService {
 
 
   getCenterById(id: number): Observable<VaccinationCenter> {
-    return this.httpClient.get<VaccinationCenter>("/api/public/center/"+id);
+    return this.httpClient.get<VaccinationCenter>("/api/center/"+id);
   }
 
   getVaccinationCentersByCity(city:string) : Observable<VaccinationCenter[]> {
-    return this.httpClient.get<VaccinationCenter[]>("/api/public/centers/getByCity",{
+    return this.httpClient.get<VaccinationCenter[]>("/api/centers/getByCity",{
       params:{
         "city": city
       }
@@ -23,14 +23,14 @@ export class VaccinationService {
   }
 
   getAllVaccinationCenters() : Observable<VaccinationCenter[]> {
-    return this.httpClient.get<VaccinationCenter[]>("/api/public/centers");
+    return this.httpClient.get<VaccinationCenter[]>("/api/centers");
   }
 
   saveVaccinationCenter(vaccinationCenter: VaccinationCenter) : Observable<VaccinationCenter> {
-    return this.httpClient.post<VaccinationCenter>("/api/private/center", vaccinationCenter);
+    return this.httpClient.post<VaccinationCenter>("/api/editCenter", vaccinationCenter);
   }
 
   deleteVaccinationCenter(id: number) : Observable<void> {
-    return this.httpClient.delete<void>("/api/admin/center/"+id);
+    return this.httpClient.delete<void>("/api/deleteCenter/"+id);
   }
 }

@@ -6,9 +6,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule} from '@angular/material/card';
 import { MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule} from '@angular/material/input';
 import { MatIconModule} from '@angular/material/icon';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule} from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list'
 
 import { AppComponent } from './app.component';
 import { VaccinationCenterComponent } from './component/vaccination-center/vaccination-center.component';
@@ -23,6 +25,11 @@ import { ContactComponent } from './component/contact/contact.component';
 import { RegisterComponent } from './component/register/register.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { ErrorComponent } from './component/error/error.component';
+import { GestionPanelComponent } from './component/gestion-panel/gestion-panel.component';
+import { GestionReservationListComponent } from './component/gestion-reservation-list/gestion-reservation-list.component';
+import { GestionCenterListComponent } from './component/gestion-center-list/gestion-center-list.component';
+import { GestionUserListComponent } from './component/gestion-user-list/gestion-user-list.component';
+import { GestionCenterEditComponent } from './component/gestion-center-edit/gestion-center-edit.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +42,12 @@ import { ErrorComponent } from './component/error/error.component';
     ContactComponent,
     RegisterComponent,
     ProfileComponent,
-    ErrorComponent
+    ErrorComponent,
+    GestionPanelComponent,
+    GestionReservationListComponent,
+    GestionCenterListComponent,
+    GestionUserListComponent,
+    GestionCenterEditComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +61,9 @@ import { ErrorComponent } from './component/error/error.component';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

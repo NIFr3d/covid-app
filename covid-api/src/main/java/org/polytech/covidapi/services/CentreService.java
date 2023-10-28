@@ -28,6 +28,10 @@ public class CentreService {
     public void saveCentre(Centre centre){
         centreRepository.save(centre);
     }
+
+    public void deleteCenter(Integer id) {
+        centreRepository.deleteById(id);
+    }
 }
 
 

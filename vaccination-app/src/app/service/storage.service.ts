@@ -28,7 +28,7 @@ export class StorageService {
   public isMedecin() : boolean {
     const user = this.getUser();
     if (user) {
-      return user.roles.includes('MEDECIN');
+      return user.roles.includes('MEDECIN') || user.roles.includes('ADMIN');
     }
     return false;
   }

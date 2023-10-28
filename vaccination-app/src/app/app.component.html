@@ -10,15 +10,18 @@
             <button mat-button routerLink="/centers">Centres</button>
             <button mat-button routerLink="/contact">Contact</button>
             <span class="spacer"></span>
-            <button mat-button routerLink="/login" *ngIf="isLoggedIn==false">Se connecter</button>
-            <button [matMenuTriggerFor]="menuNav" mat-button *ngIf="isLoggedIn==true">
-                <mat-icon>account_circle</mat-icon>
-                {{prenom}} {{nom}}
-            </button>
-            <mat-menu #menuNav="matMenu">
-                <button mat-menu-item routerLink="/profile">Profil</button>
-                <button mat-menu-item (click)="logout()" *ngIf="isLoggedIn==true">Se déconnecter</button>
-            </mat-menu>
+            <button mat-button routerLink="/login" *ngIf="!isLoggedIn">Se connecter</button>
+            <div *ngIf="isLoggedIn">
+                <button mat-button routerLink="/management">Gestion</button>
+                <button [matMenuTriggerFor]="menuNav" mat-button>
+                    <mat-icon>account_circle</mat-icon>
+                    {{prenom}} {{nom}}
+                </button>
+                <mat-menu #menuNav="matMenu">
+                    <button mat-menu-item routerLink="/profile">Profil</button>
+                    <button mat-menu-item (click)="logout()">Se déconnecter</button>
+                </mat-menu>
+            </div>
         </div>
         
     </mat-toolbar>

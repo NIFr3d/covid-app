@@ -1,0 +1,13 @@
+<mat-sidenav-container  class="fullPage">
+    <mat-sidenav mode="side" opened [disableClose]="true">
+        <mat-nav-list>
+            <a mat-list-item routerLink="/management/reservations" *ngIf="isMedecin">Reservations</a>
+            <a mat-list-item routerLink="/management/centers" *ngIf="isAdmin">Centres</a>
+            <a mat-list-item routerLink="/management/users" *ngIf="isAdmin">Utilisateurs</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+

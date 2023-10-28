@@ -10,8 +10,16 @@
             <button matSuffix mat-button><mat-icon >search</mat-icon></button>
         </mat-form-field>
         <br>
-        <ul *ngFor="let center of filteredCenters">
-            <a routerLink="/center/{{center.id}}">{{center.nom}}</a>
-        </ul>
+        <mat-list *ngFor="let center of filteredCenters">
+            <mat-list-item>
+                {{center.nom}}
+                <button mat-button color="primary" routerLink="/management/center/{{center.id}}">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-button color="warn" (click)="deleteCenter(center.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-list-item>
+        </mat-list>
     </mat-card-content>
 </mat-card>
