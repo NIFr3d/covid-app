@@ -30,6 +30,7 @@ import { GestionReservationListComponent } from './component/gestion-reservation
 import { GestionCenterListComponent } from './component/gestion-center-list/gestion-center-list.component';
 import { GestionUserListComponent } from './component/gestion-user-list/gestion-user-list.component';
 import { GestionCenterEditComponent } from './component/gestion-center-edit/gestion-center-edit.component';
+import { GestionCenterAddComponent } from './component/gestion-center-add/gestion-center-add.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { GestionCenterEditComponent } from './component/gestion-center-edit/gest
     GestionReservationListComponent,
     GestionCenterListComponent,
     GestionUserListComponent,
-    GestionCenterEditComponent
+    GestionCenterEditComponent,
+    GestionCenterAddComponent
   ],
   imports: [
     BrowserModule,

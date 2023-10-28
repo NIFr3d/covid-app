@@ -33,4 +33,8 @@ export class VaccinationService {
   deleteVaccinationCenter(id: number) : Observable<void> {
     return this.httpClient.delete<void>("/api/deleteCenter/"+id);
   }
+
+  addVaccinationCenter(vaccinationCenter: VaccinationCenter) : Observable<VaccinationCenter> {
+    return this.httpClient.post<VaccinationCenter>("/api/addCenter", vaccinationCenter);
+  }
 }

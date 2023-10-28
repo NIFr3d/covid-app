@@ -13,6 +13,7 @@ import { GestionReservationListComponent } from './component/gestion-reservation
 import { GestionCenterListComponent } from './component/gestion-center-list/gestion-center-list.component';
 import { GestionUserListComponent } from './component/gestion-user-list/gestion-user-list.component';
 import { GestionCenterEditComponent } from './component/gestion-center-edit/gestion-center-edit.component';
+import { GestionCenterAddComponent } from './component/gestion-center-add/gestion-center-add.component';
 
 import { authGuard, medecinGuard, adminGuard } from './auth.guard';
 
@@ -29,7 +30,8 @@ const routes: Routes = [
     {path:"reservations", component: GestionReservationListComponent, canActivate: [medecinGuard]},
     {path:"centers", component: GestionCenterListComponent, canActivate: [adminGuard]},
     {path:"users", component: GestionUserListComponent, canActivate: [adminGuard]},
-    {path:"center/:id", component: GestionCenterEditComponent, canActivate: [adminGuard]}
+    {path:"center/:id", component: GestionCenterEditComponent, canActivate: [adminGuard]},
+    {path:"addCenter", component: GestionCenterAddComponent, canActivate: [adminGuard]}
   ]},
   {path:"", redirectTo:"/home", pathMatch:"full"}
 ];

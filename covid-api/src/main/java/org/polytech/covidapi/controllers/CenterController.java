@@ -3,6 +3,7 @@ package org.polytech.covidapi.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import org.checkerframework.checker.units.qual.C;
 import org.polytech.covidapi.entities.Centre;
 import org.polytech.covidapi.services.CentreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,4 +49,9 @@ public class CenterController {
         centreService.deleteCenter(id);
     }
 
+    @PostMapping(path = "/addCenter")
+    public void addCenter(@RequestBody Centre centre){
+        Centre centre1 = new Centre(centre.getNom(), centre.getVille(), centre.getAdresse(), centre.getCodePostal());
+        centreService.saveCentre(centre1);
+    }
 }

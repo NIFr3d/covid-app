@@ -33,4 +33,16 @@ public class Centre {
     @JsonProperty("ville")
     private String ville;
 
+    public String getNom() {
+        return nom;
+    }
+    public String getAdresse() {
+        return adresse;
+    }
+    public String getCodePostal() {
+        return codePostal;
+    }
+    public String getVille() {
+        return ville;
+    }
 }

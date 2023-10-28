@@ -5,6 +5,9 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
+        <p>
+            <a mat-raised-button color="primary" routerLink="/management/addCenter">Ajouter un centre</a>
+        </p>
         <mat-form-field>
             <input type="text" matInput placeholder="Rechercher" name="search" [(ngModel)]= "searchText" (ngModelChange)="updateList()">
             <button matSuffix mat-button><mat-icon >search</mat-icon></button>

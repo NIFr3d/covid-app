@@ -61,6 +61,7 @@ public class SecurityConfig {
         .requestMatchers("/api/centers/**").permitAll()
         .requestMatchers("/api/editCenter").hasAuthority(ERole.ADMIN.toString())	
         .requestMatchers("/api/deleteCenter/**").hasAuthority(ERole.ADMIN.toString())
+        .requestMatchers("/api/addCenter").hasAuthority(ERole.ADMIN.toString())
         .requestMatchers("/api/**").hasAuthority(ERole.ADMIN.toString())
         .anyRequest().authenticated())
         .csrf(csrf -> csrf.disable())

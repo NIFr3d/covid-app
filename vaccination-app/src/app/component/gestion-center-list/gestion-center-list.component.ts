@@ -20,7 +20,7 @@ export class GestionCenterListComponent {
   ngOnInit(): void {
     this.vaccinationService.getAllVaccinationCenters().subscribe((centers) => {
       this.centers = centers;
-      this.filteredCenters = centers;
+      this.updateList();
     });
   }
 
@@ -29,8 +29,9 @@ export class GestionCenterListComponent {
       return center.nom.toLowerCase().includes(this.searchText?.toLowerCase() ?? '');
     });
   }
-  
+
   deleteCenter(id: number) : void {
+    if(!confirm("Êtes-vous sûr de vouloir supprimer ce centre de vaccination ?")) return;
     this.vaccinationService.deleteVaccinationCenter(id).subscribe(() => {
       this.ngOnInit();
     });
