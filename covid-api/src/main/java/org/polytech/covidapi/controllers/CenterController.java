@@ -17,24 +17,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path="/api")
+@RequestMapping(path="/api/center")
 public class CenterController {
     
     @Autowired
     private CentreService centreService;
 
 
-    @GetMapping(path = "/centers/getByCity")
+    @GetMapping(path = "/getByCity")
     public List<Centre> getCentresByCity(@RequestParam("city") String city){
         return centreService.getCentresByCity(city);
     }
 
-    @GetMapping(path = "/centers")
+    @GetMapping(path = "/getAll")
     public List<Centre> getCentres(){
         return centreService.getCentres();
     }
 
-    @GetMapping(path = "/center/{id}")
+    @GetMapping(path = "/getById/{id}")
     public Optional<Centre> getCentreById(@PathVariable Integer id){
         return centreService.getCentreById(id);
     }

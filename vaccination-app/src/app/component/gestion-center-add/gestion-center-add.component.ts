@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { VaccinationCenter } from 'src/app/entities/vaccination-center';
-import { VaccinationService } from 'src/app/service/vaccination.service';
+import { CenterService } from 'src/app/service/center.service';
 
 @Component({
   selector: 'app-gestion-center-add',
@@ -9,7 +9,7 @@ import { VaccinationService } from 'src/app/service/vaccination.service';
 })
 export class GestionCenterAddComponent {
 
-  constructor(private vaccinationService : VaccinationService) { }
+  constructor(private centerService : CenterService) { }
 
   saveError : boolean = false;
   errorMessage : string = "";
@@ -17,7 +17,7 @@ export class GestionCenterAddComponent {
   center: VaccinationCenter = {adresse : "", ville: "", codePostal: "", nom: "", id: 0};
 
   onSubmit(): void {
-    this.vaccinationService.addVaccinationCenter(this.center).subscribe({
+    this.centerService.addVaccinationCenter(this.center).subscribe({
       next: (data) => {
         location.replace('/management/centers');
       },

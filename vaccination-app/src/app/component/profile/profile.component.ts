@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/service/auth.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,8 +16,8 @@ export class ProfileComponent {
   errorMessage?: string;
   editPassword = false;
 
-  constructor(private authService : AuthService) {
-    authService.getUserInfos().subscribe((data : any) => {
+  constructor(private userService : UserService) {
+    userService.getUserInfos().subscribe((data : any) => {
       this.credentials.email = data.email;
       this.credentials.nom = data.nom;
       this.credentials.prenom = data.prenom;
@@ -60,7 +60,7 @@ export class ProfileComponent {
   onSubmitInfos () : void {
     this.telephoneVerif();
     if(!this.telephoneError) {
-      this.authService.updateUserInfos(this.credentials.email, this.credentials.nom, this.credentials.prenom, this.credentials.telephone).subscribe({
+      this.userService.updateUserInfos(this.credentials.email, this.credentials.nom, this.credentials.prenom, this.credentials.telephone).subscribe({
         next : data => {
           location.replace('/profile');
         },
@@ -74,7 +74,7 @@ export class ProfileComponent {
   onSubmitPassword () : void {
     this.passVerif();
     if(!this.samePasswordError && !this.passwordLengthError) {
-      this.authService.updateUserPassword(this.credentials.oldPassword, this.credentials.password).subscribe({
+      this.userService.updateUserPassword(this.credentials.oldPassword, this.credentials.password).subscribe({
         next : data => {
           location.replace('/profile');
         },

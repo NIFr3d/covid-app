@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VaccinationCenter } from '../../entities/vaccination-center';
-import { VaccinationService } from '../../service/vaccination.service';
+import { CenterService } from '../../service/center.service';
 
 @Component({
   selector: 'app-vaccination-center-list',
@@ -9,7 +9,7 @@ import { VaccinationService } from '../../service/vaccination.service';
 })
 export class VaccinationCenterListComponent implements OnInit{
 
-  constructor(private vaccinationService : VaccinationService) { }
+  constructor(private centerService : CenterService) { }
 
   centers!: VaccinationCenter[];
 
@@ -18,7 +18,7 @@ export class VaccinationCenterListComponent implements OnInit{
   searchText: string = "";
 
   ngOnInit(): void {
-    this.vaccinationService.getAllVaccinationCenters().subscribe((centers) => {
+    this.centerService.getAllVaccinationCenters().subscribe((centers) => {
       this.centers = centers;
       this.filteredCenters = centers;
     });

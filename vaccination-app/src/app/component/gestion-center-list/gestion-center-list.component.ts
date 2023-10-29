@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { VaccinationCenter } from 'src/app/entities/vaccination-center';
-import { VaccinationService } from 'src/app/service/vaccination.service';
+import { CenterService } from 'src/app/service/center.service';
 
 @Component({
   selector: 'app-gestion-center-list',
@@ -9,7 +9,7 @@ import { VaccinationService } from 'src/app/service/vaccination.service';
 })
 export class GestionCenterListComponent {
 
-  constructor(private vaccinationService : VaccinationService) { }
+  constructor(private centerService : CenterService) { }
 
   centers!: VaccinationCenter[];
 
@@ -18,7 +18,7 @@ export class GestionCenterListComponent {
   searchText: string = "";
 
   ngOnInit(): void {
-    this.vaccinationService.getAllVaccinationCenters().subscribe((centers) => {
+    this.centerService.getAllVaccinationCenters().subscribe((centers) => {
       this.centers = centers;
       this.updateList();
     });
@@ -32,7 +32,7 @@ export class GestionCenterListComponent {
 
   deleteCenter(id: number) : void {
     if(!confirm("Êtes-vous sûr de vouloir supprimer ce centre de vaccination ?")) return;
-    this.vaccinationService.deleteVaccinationCenter(id).subscribe(() => {
+    this.centerService.deleteVaccinationCenter(id).subscribe(() => {
       this.ngOnInit();
     });
   }

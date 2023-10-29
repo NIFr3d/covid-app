@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { VaccinationCenter } from '../../entities/vaccination-center';
+import { VaccinationCenter } from 'src/app/entities/vaccination-center';
 import { ActivatedRoute } from '@angular/router';
-import { VaccinationService } from '../../service/vaccination.service';
+import { CenterService } from 'src/app/service/center.service';
+import { StorageService } from 'src/app/service/storage.service';
 
 @Component({
   selector: 'app-vaccination-center',
@@ -12,13 +13,15 @@ export class VaccinationCenterComponent implements OnInit{
 
 
   center!: VaccinationCenter;
+  isLoggedIn = this.storageService.isLoggedIn();
 
   constructor(private route: ActivatedRoute, 
-              private vaccinationService : VaccinationService) { }
+              private centerService : CenterService,
+              private storageService : StorageService) { }
 
   ngOnInit(): void {  
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.vaccinationService.getCenterById(id).subscribe((center) => {
+    this.centerService.getCenterById(id).subscribe((center) => {
       this.center = center;
     });
   }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { StorageService } from './service/storage.service';
-import { AuthService } from './service/auth.service';
+import { UserService } from './service/user.service';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +14,9 @@ export class AppComponent {
   nom? : string;
   prenom? : string;
 
-  constructor(private authService : AuthService, private storageService : StorageService) {
+  constructor(private userService : UserService, private storageService : StorageService) {
     if(this.isLoggedIn){
-      this.authService.getUserInfos().subscribe((data : any) => {
+      this.userService.getUserInfos().subscribe((data : any) => {
         this.nom = data.nom;
         this.prenom = data.prenom[0] + '.';
       });

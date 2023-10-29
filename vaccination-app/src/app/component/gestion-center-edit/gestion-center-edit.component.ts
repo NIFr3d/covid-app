@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { VaccinationCenter } from 'src/app/entities/vaccination-center';
-import { VaccinationService } from 'src/app/service/vaccination.service';
+import { CenterService } from 'src/app/service/center.service';
 
 @Component({
   selector: 'app-gestion-center-edit',
@@ -10,7 +10,7 @@ import { VaccinationService } from 'src/app/service/vaccination.service';
 })
 export class GestionCenterEditComponent {
 
-  constructor(private vaccinationService : VaccinationService,
+  constructor(private centerService : CenterService,
               private route: ActivatedRoute) { }
 
   center!: VaccinationCenter;
@@ -20,13 +20,13 @@ export class GestionCenterEditComponent {
 
   ngOnInit (): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.vaccinationService.getCenterById(id).subscribe((center) => {
+    this.centerService.getCenterById(id).subscribe((center) => {
       this.center = center;
     });
   }
 
   onSubmit() : void {
-    this.vaccinationService.saveVaccinationCenter(this.center).subscribe(() => {
+    this.centerService.saveVaccinationCenter(this.center).subscribe(() => {
       window.location.href = "/management/centers";
     });
   }

@@ -24,14 +24,21 @@ public class Centre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
     private Integer id;
+
     @JsonProperty("nom")
     private String nom;
+
     @JsonProperty("adresse")
     private String adresse;
+
     @JsonProperty("codePostal")
     private String codePostal;
+
     @JsonProperty("ville")
     private String ville;
+
+    @OneToMany(mappedBy = "centre")
+    private List<Reservation> reservations;
 
     public String getNom() {
         return nom;
