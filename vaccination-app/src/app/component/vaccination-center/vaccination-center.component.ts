@@ -12,12 +12,13 @@ import { StorageService } from 'src/app/service/storage.service';
 export class VaccinationCenterComponent implements OnInit{
 
 
-  center!: VaccinationCenter;
+  center: VaccinationCenter = {} as VaccinationCenter;
   isLoggedIn = this.storageService.isLoggedIn();
 
   constructor(private route: ActivatedRoute, 
               private centerService : CenterService,
-              private storageService : StorageService) { }
+              private storageService : StorageService
+              ) { }
 
   ngOnInit(): void {  
     const id = Number(this.route.snapshot.paramMap.get('id'));

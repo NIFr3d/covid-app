@@ -1,6 +1,6 @@
 package org.polytech.covidapi.entities;
 
-import org.hibernate.annotations.ManyToAny;
+import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -20,10 +20,7 @@ public class Reservation {
     private Integer id;
     
     @JsonProperty("date")
-    private String date;
-
-    @JsonProperty("heure")
-    private String heure;
+    private Timestamp date;
 
     @ManyToOne
     @JsonProperty("userId")
@@ -33,24 +30,23 @@ public class Reservation {
     @JsonProperty("centerId")
     private Centre centre;
 
-    public Reservation(String date, String heure, Utilisateur utilisateur, Centre centre) {
+    public Reservation(Timestamp date, Utilisateur utilisateur, Centre centre) {
         this.date = date;
-        this.heure = heure;
         this.utilisateur = utilisateur;
         this.centre = centre;
     }
 
-    public String getDate() {
+    public Timestamp getDate() {
         return date;
-    }
-    public String getHeure() {
-        return heure;
     }
     public Utilisateur getUtilisateur() {
         return utilisateur;
     }
     public Centre getCentre() {
         return centre;
+    }
+    public Integer getId() {
+        return id;
     }
 
 }

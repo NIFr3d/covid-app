@@ -61,6 +61,7 @@ public class SecurityConfig {
         .requestMatchers("/api/center/getByCity").permitAll()
         .requestMatchers("/api/center/getById/**").permitAll()
         .requestMatchers("/api/center/**").hasAuthority(ERole.ADMIN.toString())	
+        .requestMatchers("/api/reservation/**").authenticated()
         .requestMatchers("/api/**").hasAuthority(ERole.ADMIN.toString())
         .anyRequest().authenticated())
         .csrf(csrf -> csrf.disable())

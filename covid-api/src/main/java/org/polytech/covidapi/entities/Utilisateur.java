@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.checkerframework.common.aliasing.qual.Unique;
+
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,7 +21,10 @@ public class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String mail;
+
+    @Unique
+    private String email;
+
     private String nom;
     private String prenom;
     private String telephone;
@@ -34,8 +39,8 @@ public class Utilisateur {
     private List<Reservation> reservations;
 
 
-    public Utilisateur(String mail , String nom , String prenom , String telephone , String password) {
-        this.mail = mail;
+    public Utilisateur(String email , String nom , String prenom , String telephone , String password) {
+        this.email = email;
         this.nom = nom;
         this.prenom = prenom;
         this.telephone = telephone;
@@ -45,8 +50,8 @@ public class Utilisateur {
         this.reservations = new ArrayList<Reservation>();
         this.roles = List.of(ERole.USER);
     }
-    public String getMail() {
-        return this.mail;
+    public String getEmail() {
+        return this.email;
     }
     public String getPassword() {
         return this.password;

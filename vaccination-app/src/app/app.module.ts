@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -10,7 +10,9 @@ import { MatInputModule} from '@angular/material/input';
 import { MatIconModule} from '@angular/material/icon';
 import { MatMenuModule} from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list'
+import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppComponent } from './app.component';
 import { VaccinationCenterComponent } from './component/vaccination-center/vaccination-center.component';
@@ -31,6 +33,12 @@ import { GestionCenterListComponent } from './component/gestion-center-list/gest
 import { GestionUserListComponent } from './component/gestion-user-list/gestion-user-list.component';
 import { GestionCenterEditComponent } from './component/gestion-center-edit/gestion-center-edit.component';
 import { GestionCenterAddComponent } from './component/gestion-center-add/gestion-center-add.component';
+import { ReservationFormComponent } from './component/reservation-form/reservation-form.component';
+import { DatePipe, registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import { ReservationListComponent } from './component/reservation-list/reservation-list.component';
+registerLocaleData(localeFr);
+
 
 @NgModule({
   declarations: [
@@ -49,7 +57,9 @@ import { GestionCenterAddComponent } from './component/gestion-center-add/gestio
     GestionCenterListComponent,
     GestionUserListComponent,
     GestionCenterEditComponent,
-    GestionCenterAddComponent
+    GestionCenterAddComponent,
+    ReservationFormComponent,
+    ReservationListComponent
   ],
   imports: [
     BrowserModule,
@@ -65,11 +75,15 @@ import { GestionCenterAddComponent } from './component/gestion-center-add/gestio
     MatIconModule,
     MatMenuModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatTableModule,
+    MatExpansionModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    DatePipe,
+    { provide: LOCALE_ID, useValue: 'fr-FR' }
   ],
   bootstrap: [AppComponent]
 })

@@ -47,11 +47,11 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
-        Utilisateur utilisateur = utilisateurService.findByMail(loginRequest.getEmail()).get();
+        Utilisateur utilisateur = utilisateurService.findByEmail(loginRequest.getEmail()).get();
         
         return ResponseEntity.ok(new JwtResponse(jwt, 
                                                  utilisateur.getId(),
-                                                 utilisateur.getMail(), 
+                                                 utilisateur.getEmail(), 
                                                  utilisateur.getRoles().stream().map(role -> role.toString()).toList()));
     }
 
@@ -70,7 +70,7 @@ public class AuthController {
         if(bindingResult.hasErrors()){
             return ResponseEntity.badRequest().body("{ \"message\": \"Veuillez remplir tous les champs\"}");
         }
-        if(utilisateurService.findByMail(registerRequest.getEmail()).isPresent()){
+        if(utilisateurService.findByEmail(registerRequest.getEmail()).isPresent()){
             return ResponseEntity.badRequest().body("{ \"message\": \"Email déjà utilisé\"}");
         }
         utilisateurService.addUser(registerRequest.getEmail(), 

@@ -30,9 +30,9 @@ public class UserController {
     @GetMapping(path = "/getUserInfos")
     public ResponseEntity<?> getUserInfos(){
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(utilisateurService.findByMail(user.getUsername()).isPresent()){
-            Utilisateur utilisateur = utilisateurService.findByMail(user.getUsername()).get();
-            return ResponseEntity.ok().body("{ \"nom\": \""+ utilisateur.getNom()+"\", \"prenom\": \""+ utilisateur.getPrenom()+"\", \"telephone\": \""+ utilisateur.getTelephone()+"\", \"email\": \""+ utilisateur.getMail()+"\"}");
+        if(utilisateurService.findByEmail(user.getUsername()).isPresent()){
+            Utilisateur utilisateur = utilisateurService.findByEmail(user.getUsername()).get();
+            return ResponseEntity.ok().body("{ \"nom\": \""+ utilisateur.getNom()+"\", \"prenom\": \""+ utilisateur.getPrenom()+"\", \"telephone\": \""+ utilisateur.getTelephone()+"\", \"email\": \""+ utilisateur.getEmail()+"\"}");
         }
         return ResponseEntity.badRequest().body("{ \"message\": \"Utilisateur non trouvé\"}");
     }
@@ -46,8 +46,8 @@ public class UserController {
             return ResponseEntity.badRequest().body("{ \"message\": \"Veuillez remplir tous les champs\"}");
         }
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(utilisateurService.findByMail(user.getUsername()).isPresent()){
-            Utilisateur utilisateur = utilisateurService.findByMail(user.getUsername()).get();
+        if(utilisateurService.findByEmail(user.getUsername()).isPresent()){
+            Utilisateur utilisateur = utilisateurService.findByEmail(user.getUsername()).get();
             utilisateur.setNom(updateUserInfoRequest.getNom());
             utilisateur.setPrenom(updateUserInfoRequest.getPrenom());
             utilisateur.setTelephone(updateUserInfoRequest.getTelephone());
@@ -63,8 +63,8 @@ public class UserController {
             return ResponseEntity.badRequest().body("{ \"message\": \"Les môts de passes doivent faire entre 6 et 40 caractères\"}");
         }
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(utilisateurService.findByMail(user.getUsername()).isPresent()){
-            Utilisateur utilisateur = utilisateurService.findByMail(user.getUsername()).get();
+        if(utilisateurService.findByEmail(user.getUsername()).isPresent()){
+            Utilisateur utilisateur = utilisateurService.findByEmail(user.getUsername()).get();
             if(passwordEncoder.matches(updateUserPasswordRequest.getOldPassword(), utilisateur.getPassword())){
                 utilisateur.setPassword(passwordEncoder.encode(updateUserPasswordRequest.getNewPassword()));
                 utilisateurService.updateUser(utilisateur);

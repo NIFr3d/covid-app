@@ -6,7 +6,7 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <button mat-raised-button color="primary" routerLink="/centers">Réserver un rendez-vous</button>
+            <button mat-raised-button color="primary" routerLink="/reservation/{{center.id}}">Réserver un rendez-vous</button>
             <p>Nom du centre : {{center.nom}}</p>
             <p>Adresse : {{center.adresse}}</p>
             <p>Code postal : {{center.codePostal}}</p>

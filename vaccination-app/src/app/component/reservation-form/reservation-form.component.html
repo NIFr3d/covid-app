@@ -1,0 +1,31 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{ currentWeek.start | date: 'dd/MM/yyyy' }} - {{ currentWeek.end | date: 'dd/MM/yyyy' }}</mat-card-title>
+        <mat-card-subtitle>
+            <button mat-icon-button (click)="previousWeek()" [disabled]="currentWeek.start <= minDate">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <button mat-icon-button (click)="nextWeek()">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <table>
+            <thead>
+                <tr>
+                <th></th>
+                <th *ngFor="let day of currentWeek.days">{{ day.date | date: 'EEE dd/MM' }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let time of times">
+                <td>{{ time }}</td>
+                <td *ngFor="let day of currentWeek.days">
+                    <button mat-button [disabled]="!day.availableTimes.includes(time)" (click)="reserve(day.date, time)">Réserver</button>
+                </td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-card-content>
+</mat-card>

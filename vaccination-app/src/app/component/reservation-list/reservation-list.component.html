@@ -1,0 +1,43 @@
+<mat-card>
+    <mat-card-title>Mes réservations</mat-card-title>
+    <mat-card-content>
+        <table mat-table [dataSource]="reservations" class="mat-elevation-z8" *ngIf="reservations.length > 0">
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let reservation">{{ reservation.date | date:'EEEE dd MMMM' }}</td>
+            </ng-container>
+                <ng-container matColumnDef="centre">
+                <th mat-header-cell *matHeaderCellDef>Centre</th>
+                <td mat-cell *matCellDef="let reservation">
+                    <mat-expansion-panel [hideToggle]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>{{reservation.centre.nom}}</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-panel-description>
+                            <mat-icon>location_on</mat-icon>
+                            {{reservation.centre.adresse}}
+                            <br>
+                            {{reservation.centre.codePostal}} {{reservation.centre.ville}}
+                        </mat-panel-description>
+                    </mat-expansion-panel>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="time">
+                <th mat-header-cell *matHeaderCellDef>Horaire</th>
+                <td mat-cell *matCellDef="let reservation">{{ reservation.date | date: 'hh:mm' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="cancel">
+                <th mat-header-cell *matHeaderCellDef>Annuler</th>
+                <td mat-cell *matCellDef="let reservation">
+                    <button mat-raised-button color="warn" (click)="cancelReservation(reservation.id)">Annuler</button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div *ngIf="reservations.length == 0">
+            <p>Vous n'avez pas de réservation.</p>
+            <a mat-raised-button color="primary" routerLink="/centers">Réserver un créneau</a>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -8,6 +8,8 @@ import { ContactComponent } from './component/contact/contact.component';
 import { RegisterComponent } from './component/register/register.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { ErrorComponent } from './component/error/error.component';
+import { ReservationFormComponent } from './component/reservation-form/reservation-form.component';
+import { ReservationListComponent } from './component/reservation-list/reservation-list.component';
 import { GestionPanelComponent } from './component/gestion-panel/gestion-panel.component';
 import { GestionReservationListComponent } from './component/gestion-reservation-list/gestion-reservation-list.component';
 import { GestionCenterListComponent } from './component/gestion-center-list/gestion-center-list.component';
@@ -26,6 +28,8 @@ const routes: Routes = [
   {path:"register", component: RegisterComponent},
   {path:"error", component: ErrorComponent},
   {path:"profile", component: ProfileComponent, canActivate: [authGuard]},
+  {path:"reservation/:id", component: ReservationFormComponent, canActivate: [authGuard]},
+  {path:"reservations", component: ReservationListComponent, canActivate: [authGuard]},
   {path:"management", component: GestionPanelComponent, canActivate: [medecinGuard], children: [
     {path:"reservations", component: GestionReservationListComponent, canActivate: [medecinGuard]},
     {path:"centers", component: GestionCenterListComponent, canActivate: [adminGuard]},
