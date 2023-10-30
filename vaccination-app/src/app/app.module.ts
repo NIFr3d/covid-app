@@ -13,6 +13,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppComponent } from './app.component';
 import { VaccinationCenterComponent } from './component/vaccination-center/vaccination-center.component';
@@ -77,7 +79,9 @@ registerLocaleData(localeFr);
     MatSidenavModule,
     MatListModule,
     MatTableModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatGridListModule,
+    MatSelectModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

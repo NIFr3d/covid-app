@@ -56,6 +56,7 @@ public class SecurityConfig {
         .requestMatchers("/api/auth/login").permitAll()
         .requestMatchers("/api/auth/register").permitAll()
         .requestMatchers("/api/auth/**").authenticated()
+        .requestMatchers("/api/user/admin/**").hasAuthority(ERole.ADMIN.toString())
         .requestMatchers("/api/user/**").authenticated()
         .requestMatchers("/api/center/getAll").permitAll()
         .requestMatchers("/api/center/getByCity").permitAll()

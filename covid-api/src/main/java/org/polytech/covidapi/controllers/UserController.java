@@ -1,8 +1,11 @@
 package org.polytech.covidapi.controllers;
 
+import java.util.Map;
+
 import org.polytech.covidapi.entities.Utilisateur;
 import org.polytech.covidapi.payload.request.UpdateUserInfoRequest;
 import org.polytech.covidapi.payload.request.UpdateUserPasswordRequest;
+import org.polytech.covidapi.payload.request.UpdateUserRequest;
 import org.polytech.covidapi.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
@@ -71,6 +75,32 @@ public class UserController {
                 return ResponseEntity.ok().body("{ \"message\": \"Mot de passe mis à jour avec succès\"}");
             }
             return ResponseEntity.badRequest().body("{ \"message\": \"Mot de passe incorrect\"}");
+        }
+        return ResponseEntity.badRequest().body("{ \"message\": \"Utilisateur non trouvé\"}");
+    }
+
+    @PostMapping(path = "/admin/searchUser")
+    public ResponseEntity<?> searchUser(@RequestParam String email){
+        return ResponseEntity.ok().body(utilisateurService.findByEmailStartsWith(email).stream().map(utilisateur -> Map.of("nom", utilisateur.getNom(), "prenom", utilisateur.getPrenom(), "telephone", utilisateur.getTelephone(), "email", utilisateur.getEmail(), "roles", utilisateur.getRoles())).toArray());
+    }
+
+    @PostMapping(path = "/admin/updateUser")
+    public ResponseEntity<?> updateUser(@Valid @RequestBody UpdateUserRequest updateUserRequest, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return ResponseEntity.badRequest().body("{ \"message\": \"Veuillez remplir tous les champs\"}");
+        }
+        if(updateUserRequest.getRoles().isEmpty()){
+            return ResponseEntity.badRequest().body("{ \"message\": \"Veuillez choisir au moins un rôle\"}");
+        }
+        utilisateurService.updateUserRoles(updateUserRequest.getEmail(), updateUserRequest.getRoles());
+        return ResponseEntity.ok().body("{ \"message\": \"Utilisateur mis à jour avec succès\"}");
+    }
+
+    @PostMapping(path = "/admin/deleteUser")
+    public ResponseEntity<?> deleteUser(@RequestParam String email){
+        if(utilisateurService.findByEmail(email).isPresent()){
+            utilisateurService.deleteUser(utilisateurService.findByEmail(email).get());
+            return ResponseEntity.ok().body("{ \"message\": \"Utilisateur supprimé avec succès\"}");
         }
         return ResponseEntity.badRequest().body("{ \"message\": \"Utilisateur non trouvé\"}");
     }

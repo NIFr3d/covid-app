@@ -1,8 +1,10 @@
 package org.polytech.covidapi.services;
 
-import java.util.ArrayList;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.polytech.covidapi.entities.ERole;
 import org.polytech.covidapi.entities.Utilisateur;
 import org.polytech.covidapi.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +41,25 @@ public class UtilisateurService implements UserDetailsService{
 
     public void updateUser(Utilisateur utilisateur) {
         utilisateurRepository.save(utilisateur);
+    }
+
+    public List<Utilisateur> findByEmailStartsWith(String mail) {
+        return utilisateurRepository.findByEmailStartsWith(mail);
+    }
+
+    public void updateUserRoles(String email, List<String> roles) {
+        if(utilisateurRepository.findByEmail(email).isPresent()){
+            Utilisateur utilisateur = utilisateurRepository.findByEmail(email).get();
+            List<ERole> rolesArray = new ArrayList<ERole>();
+            roles.forEach(role -> {
+                rolesArray.add(ERole.valueOf(role));
+            });
+            utilisateur.setRoles(rolesArray);
+            utilisateurRepository.save(utilisateur);
+        }
+    }
+
+    public void deleteUser(Utilisateur utilisateur) {
+        utilisateurRepository.delete(utilisateur);
     }
 }
