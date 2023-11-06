@@ -36,7 +36,7 @@ public class CovidApiApplication {
 			admin.setRoles(java.util.List.of(ERole.ADMIN, ERole.USER));
 			Utilisateur utilisateur = new Utilisateur("utilisateur@utilisateur.fr", "UTILISATEUR", "Utilisateur", "0606060602", passwordEncoder.encode("utilisateur123"));
 			utilisateur.setRoles(java.util.List.of(ERole.USER));
-			Utilisateur medecin = new Utilisateur("medecin@medicin.fr", "MEDECIN", "Medecin", "0606060603", passwordEncoder.encode("medecin123"));
+			Utilisateur medecin = new Utilisateur("medecin@medecin.fr", "MEDECIN", "Medecin", "0606060603", passwordEncoder.encode("medecin123"));
 			medecin.setRoles(java.util.List.of(ERole.MEDECIN, ERole.USER));
 			centreRepository.save(centre1);
 			centreRepository.save(centre2);

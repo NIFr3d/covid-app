@@ -52,4 +52,14 @@ public class Centre {
     public String getVille() {
         return ville;
     }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
 }
