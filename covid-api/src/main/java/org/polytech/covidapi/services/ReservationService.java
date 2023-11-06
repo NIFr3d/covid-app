@@ -1,6 +1,5 @@
 package org.polytech.covidapi.services;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
@@ -13,8 +12,6 @@ import org.polytech.covidapi.repositories.ReservationRepository;
 import org.polytech.covidapi.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import ch.qos.logback.classic.pattern.Util;
 
 @Service
 public class ReservationService {
