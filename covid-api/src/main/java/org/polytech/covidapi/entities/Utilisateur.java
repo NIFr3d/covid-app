@@ -86,5 +86,7 @@ public class Utilisateur {
     public void setPassword(String encodedPassword) {
         this.password = encodedPassword;
     }
-    
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
