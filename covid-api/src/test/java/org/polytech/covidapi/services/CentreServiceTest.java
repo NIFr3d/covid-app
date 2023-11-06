@@ -1,4 +1,4 @@
-package org.polytech.covidapi;
+package org.polytech.covidapi.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +7,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.polytech.covidapi.services.CentreService;
 import org.polytech.covidapi.entities.Centre;
 
 public class CentreServiceTest {
@@ -30,14 +29,14 @@ public class CentreServiceTest {
     }
 
     @Test
-    public void getCentresTest() {
+    public void getAllCentresTest() {
         Centre centre1 = new Centre();
         centre1.setId(1);
         Centre centre2 = new Centre();
         centre2.setId(2);
-        Mockito.doReturn(java.util.List.of(centre1, centre2)).when(centreService).getCentres();
+        Mockito.doReturn(java.util.List.of(centre1, centre2)).when(centreService).getAllCentres();
 
-        List<Centre> centres = centreService.getCentres();
+        List<Centre> centres = centreService.getAllCentres();
         Assertions.assertThat(centres.size()).isEqualTo(2);
     }
 
@@ -60,7 +59,4 @@ public class CentreServiceTest {
         Assertions.assertThat(centres1.size()).isEqualTo(2);
         Assertions.assertThat(centres2.size()).isEqualTo(1);
     }
-
-    
-    
 }

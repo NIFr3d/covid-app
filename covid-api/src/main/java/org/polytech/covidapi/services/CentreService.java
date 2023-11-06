@@ -21,7 +21,7 @@ public class CentreService {
         return centreRepository.findById(id);
     }
 
-    public List<Centre> getCentres() {
+    public List<Centre> getAllCentres() {
         return centreRepository.findAll();
     }
     

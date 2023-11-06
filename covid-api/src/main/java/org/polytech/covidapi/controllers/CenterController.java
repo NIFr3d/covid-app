@@ -30,8 +30,8 @@ public class CenterController {
     }
 
     @GetMapping(path = "/getAll")
-    public List<Centre> getCentres(){
-        return centreService.getCentres();
+    public List<Centre> getAllCentres(){
+        return centreService.getAllCentres();
     }
 
     @GetMapping(path = "/getById/{id}")
