@@ -40,6 +40,7 @@ import { ReservationFormComponent } from './component/reservation-form/reservati
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { ReservationListComponent } from './component/reservation-list/reservation-list.component';
+import { GestionReservationPannelComponent } from './component/gestion-reservation-pannel/gestion-reservation-pannel.component';
 registerLocaleData(localeFr);
 
 
@@ -62,7 +63,8 @@ registerLocaleData(localeFr);
     GestionCenterEditComponent,
     GestionCenterAddComponent,
     ReservationFormComponent,
-    ReservationListComponent
+    ReservationListComponent,
+    GestionReservationPannelComponent
   ],
   imports: [
     BrowserModule,

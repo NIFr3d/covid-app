@@ -16,6 +16,7 @@ import { GestionCenterListComponent } from './component/gestion-center-list/gest
 import { GestionUserListComponent } from './component/gestion-user-list/gestion-user-list.component';
 import { GestionCenterEditComponent } from './component/gestion-center-edit/gestion-center-edit.component';
 import { GestionCenterAddComponent } from './component/gestion-center-add/gestion-center-add.component';
+import { GestionReservationPannelComponent } from './component/gestion-reservation-pannel/gestion-reservation-pannel.component';
 
 import { authGuard, medecinGuard, adminGuard } from './auth.guard';
 
@@ -31,7 +32,8 @@ const routes: Routes = [
   {path:"reservation/:id", component: ReservationFormComponent, canActivate: [authGuard]},
   {path:"reservations", component: ReservationListComponent, canActivate: [authGuard]},
   {path:"management", component: GestionPanelComponent, canActivate: [medecinGuard], children: [
-    {path:"reservations", component: GestionReservationListComponent, canActivate: [medecinGuard]},
+    {path:"reservations", component: GestionReservationPannelComponent, canActivate: [medecinGuard]},
+    {path:"reservationsByCentre/:id", component: GestionReservationListComponent, canActivate: [medecinGuard]},
     {path:"centers", component: GestionCenterListComponent, canActivate: [adminGuard]},
     {path:"users", component: GestionUserListComponent, canActivate: [adminGuard]},
     {path:"center/:id", component: GestionCenterEditComponent, canActivate: [adminGuard]},

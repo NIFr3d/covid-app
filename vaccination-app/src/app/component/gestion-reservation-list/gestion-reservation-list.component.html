@@ -1,32 +1,16 @@
-<mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Recherche par utilisateur
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <form (ngSubmit)="searchByUser()">
-        <mat-form-field>
-          <input matInput placeholder="Email" [(ngModel)]="userEmail" name="email">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Nom et prénom" [(ngModel)]="userName" name="name">
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Rechercher</button>
-      </form>
-    </mat-expansion-panel>
-  
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Recherche par centre
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <form (ngSubmit)="searchByCentre()">
-        <mat-form-field>
-          <input matInput placeholder="Nom du centre" [(ngModel)]="centreName" name="centre">
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Rechercher</button>
-      </form>
-    </mat-expansion-panel>
-  </mat-accordion>
+<mat-card>
+<mat-card-title>Gestion des réservations du centre {{centre.nom}}</mat-card-title>
+<mat-card-content>
+    <mat-calendar [(selected)]="selectedDay"></mat-calendar>
+</mat-card-content>
+</mat-card>
+
+<ng-container *ngIf="selectedDay">
+    <h2>Réservations pour {{selectedDay | date}}</h2>
+    <mat-list>
+        <mat-list-item *ngFor="let reservation of reservations">
+        {{reservation.user.nom}} {{reservation.user.prenom}} - {{reservation.date | date:'HH:mm'}}}
+        <button mat-button color="warn" (click)="deleteReservation(reservation.id)">Supprimer</button>
+        </mat-list-item>
+    </mat-list>
+</ng-container>
