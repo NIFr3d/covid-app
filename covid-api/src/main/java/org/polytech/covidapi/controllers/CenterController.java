@@ -3,7 +3,6 @@ package org.polytech.covidapi.controllers;
 import java.util.List;
 import java.util.Optional;
 
-import org.checkerframework.checker.units.qual.C;
 import org.polytech.covidapi.entities.Centre;
 import org.polytech.covidapi.services.CentreService;
 import org.springframework.beans.factory.annotation.Autowired;
