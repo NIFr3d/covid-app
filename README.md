@@ -1,8 +1,8 @@
 # covid-app
 
-Etudiants ayant travaillés sur ce projet :  
-WAGNER Frédéric  
-REY Thibault  
+Etudiants ayant travaillés sur ce projet :\
+WAGNER Frédéric\
+REY Thibault\
 
 Tâches effectuées dans le projet : 
 
