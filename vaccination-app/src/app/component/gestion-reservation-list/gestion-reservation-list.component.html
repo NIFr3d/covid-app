@@ -1,1 +1,32 @@
-<p>gestion-reservation-list works!</p>
+<mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Recherche par utilisateur
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <form (ngSubmit)="searchByUser()">
+        <mat-form-field>
+          <input matInput placeholder="Email" [(ngModel)]="userEmail" name="email">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Nom et prénom" [(ngModel)]="userName" name="name">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Rechercher</button>
+      </form>
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Recherche par centre
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <form (ngSubmit)="searchByCentre()">
+        <mat-form-field>
+          <input matInput placeholder="Nom du centre" [(ngModel)]="centreName" name="centre">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Rechercher</button>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>

@@ -40,7 +40,7 @@ public class ReservationService {
     }
 
 
-    public List<Reservation> getReservationsFromTo(Timestamp dateFrom, Timestamp dateTo, Integer idCentre) {
+    public List<Reservation> getReservationsFromToByCentre(Timestamp dateFrom, Timestamp dateTo, Integer idCentre) {
         return reservationRepository.findAllByDateBetweenAndCentre(dateFrom, dateTo, centreRepository.findById(idCentre).get());
     }
 
@@ -80,5 +80,22 @@ public class ReservationService {
         reservationRepository.delete(reservation);
         return true;
     }
+
+    public List<Reservation> getReservationsForDayByCentre(Integer centreId, Timestamp date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Timestamp dateFrom = new Timestamp(calendar.getTimeInMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 18);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Timestamp dateTo = new Timestamp(calendar.getTimeInMillis());
+        return reservationRepository.findAllByDateBetweenAndCentre(dateFrom, dateTo, centreRepository.findById(centreId).get());
+    }
     
+    public void deleteReservation(Integer id) {
+        reservationRepository.deleteById(id);
+    }
 }

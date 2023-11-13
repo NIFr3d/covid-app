@@ -39,7 +39,7 @@ public class ReservationController {
 
     @GetMapping(path="/getReservationsFromTo")
     public ResponseEntity<?> getReservations(@RequestParam long from, @RequestParam long to, @RequestParam Integer centreId){
-        List<Reservation> reservations = reservationService.getReservationsFromTo(new Timestamp(from), new Timestamp(to), centreId);
+        List<Reservation> reservations = reservationService.getReservationsFromToByCentre(new Timestamp(from), new Timestamp(to), centreId);
         return ResponseEntity.ok().body(reservations.stream().map(Reservation::getDate).map(Timestamp::getTime).toArray());
     }
 
@@ -58,5 +58,13 @@ public class ReservationController {
         }
         return ResponseEntity.badRequest().body("{ \"message\": \"Une erreur est survenue\"}");
     }
+
+    @GetMapping(path="/getReservationsForDayByCentre/{centreId}/{date}")
+    public ResponseEntity<?> getReservationsForDayByCentre(@PathVariable Integer centreId, @PathVariable long date){
+        List<Reservation> reservations = reservationService.getReservationsForDayByCentre(centreId, new Timestamp(date));
+        return ResponseEntity.ok().body(reservations.stream().map(reservation -> Map.of("id", reservation.getId(), "date", reservation.getDate().getTime(), "centreId", reservation.getCentre().getId(), "utilisateur", reservation.getUtilisateur())).toArray());
+    }
+
+
 
 }

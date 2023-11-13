@@ -25,4 +25,12 @@ export class ReservationService {
   cancelReservation(id : number){
     return this.http.delete('/api/reservation/cancelReservation/'+id);
   }
+
+  getReservationsForDayByCentre(date : Date, centreId : string){
+    return this.http.get('/api/reservation/getReservationsForDayByCentre/'+centreId+'/'+date.getTime());
+  }
+
+  deleteReservation(id : string){
+    return this.http.delete('/api/reservation/deleteReservation/'+id);
+  }
 }
