@@ -2,10 +2,9 @@
 
 Etudiants ayant travaillés sur ce projet :\
 WAGNER Frédéric\
-REY Thibault\
+REY Thibault
 
 Tâches effectuées dans le projet : 
 
-
-Authentification par JWT
+Authentification par JWT\
 Tests unitaires et tests d'implémentations
