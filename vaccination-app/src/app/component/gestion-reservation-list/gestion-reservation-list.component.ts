@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Reservation } from 'src/app/entities/reservation';
 import { VaccinationCenter } from 'src/app/entities/vaccination-center';
@@ -8,7 +8,8 @@ import { ReservationService } from 'src/app/service/reservation.service';
 @Component({
   selector: 'app-gestion-reservation-list',
   templateUrl: './gestion-reservation-list.component.html',
-  styleUrls: ['./gestion-reservation-list.component.scss']
+  styleUrls: ['./gestion-reservation-list.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class GestionReservationListComponent implements OnInit {
   selectedDay?: Date;
@@ -24,6 +25,27 @@ export class GestionReservationListComponent implements OnInit {
     this.centreService.getCenterById(id).subscribe((centre) => {
       this.centre = centre;
     });
+  }
+
+  selectDate(date : Date | null){
+    console.log(date);
+  }
+
+  disableWeekendsFilter = (d: Date): boolean => {
+    return (d.getDay() !== 0 && d.getDay() !== 6);
+  }
+
+  dateClass = (d: Date): string => {
+    let today = new Date();
+    today.setHours(0,0,0,0);
+    if (d < today) {
+      return 'before-today';
+    } else if (d > today) {
+      return 'after-today';
+    } else {
+      return 'today';
+    }
+
   }
 
   onDaySelected(date: Date) {

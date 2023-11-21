@@ -1,0 +1,11 @@
+::ng-deep .mat-calendar-body-cell-container {
+    &.before-today {
+      background: lightcoral !important;
+    }
+    &.today {
+      background-color: #90ee90 !important;
+    }
+    &.after-today {
+      background: lightblue !important;
+    }
+  }

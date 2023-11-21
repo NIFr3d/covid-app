@@ -16,6 +16,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 
 import { AppComponent } from './app.component';
 import { VaccinationCenterComponent } from './component/vaccination-center/vaccination-center.component';
@@ -41,6 +42,7 @@ import { DatePipe, registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { ReservationListComponent } from './component/reservation-list/reservation-list.component';
 import { GestionReservationPannelComponent } from './component/gestion-reservation-pannel/gestion-reservation-pannel.component';
+import { CustomDateAdapter } from './customdateadapter';
 registerLocaleData(localeFr);
 
 
@@ -85,11 +87,13 @@ registerLocaleData(localeFr);
     MatExpansionModule,
     MatGridListModule,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: DateAdapter, useClass: CustomDateAdapter },
     DatePipe,
     { provide: LOCALE_ID, useValue: 'fr-FR' }
   ],
