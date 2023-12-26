@@ -2,8 +2,8 @@
     <mat-sidenav mode="side" opened [disableClose]="true">
         <mat-nav-list>
             <a mat-list-item routerLink="/management/reservations" *ngIf="isMedecin">Reservations</a>
-            <a mat-list-item routerLink="/management/centers" *ngIf="isAdmin">Centres</a>
-            <a mat-list-item routerLink="/management/users" *ngIf="isAdmin">Utilisateurs</a>
+            <a mat-list-item routerLink="/management/centers" *ngIf="isSuperAdmin">Centres</a>
+            <a mat-list-item routerLink="/management/users" *ngIf="isAdmin || isSuperAdmin">Utilisateurs</a>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

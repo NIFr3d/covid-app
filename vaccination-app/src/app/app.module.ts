@@ -43,6 +43,7 @@ import localeFr from '@angular/common/locales/fr';
 import { ReservationListComponent } from './component/reservation-list/reservation-list.component';
 import { GestionReservationPannelComponent } from './component/gestion-reservation-pannel/gestion-reservation-pannel.component';
 import { CustomDateAdapter } from './customdateadapter';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 registerLocaleData(localeFr);
 
 
@@ -88,7 +89,8 @@ registerLocaleData(localeFr);
     MatGridListModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSnackBarModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

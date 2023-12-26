@@ -40,6 +40,9 @@ public class Centre {
     @OneToMany(mappedBy = "centre")
     private List<Reservation> reservations;
 
+    @OneToMany(mappedBy = "centre")
+    private List<Utilisateur> utilisateurs;
+
     public String getNom() {
         return nom;
     }

@@ -18,7 +18,7 @@ export const medecinGuard: CanActivateFn = (route, state) => {
   const user = inject(StorageService);
   const router = inject(Router);
   if(user.isLoggedIn()) {
-    if(user.isMedecin()) return true;
+    if(user.isMedecin() || user.isAdmin() || user.isSuperAdmin()) return true;
     else {
       router.navigateByUrl('/error?error=403')
       return false;
@@ -32,7 +32,7 @@ export const adminGuard: CanActivateFn = (route, state) => {
   const user = inject(StorageService);
   const router = inject(Router);
   if(user.isLoggedIn()) {
-    if(user.isAdmin()) return true;
+    if(user.isAdmin() || user.isSuperAdmin()) return true;
     else {
       router.navigateByUrl('/error?error=403')
       return false;
@@ -42,4 +42,17 @@ export const adminGuard: CanActivateFn = (route, state) => {
     return false;
   }
 };
-
+export const superAdminGuard: CanActivateFn = (route, state) => {
+  const user = inject(StorageService);
+  const router = inject(Router);
+  if(user.isLoggedIn()) {
+    if(user.isSuperAdmin()) return true;
+    else {
+      router.navigateByUrl('/error?error=403')
+      return false;
+    }
+  }else{
+    router.navigateByUrl('/login')
+    return false;
+  }
+};

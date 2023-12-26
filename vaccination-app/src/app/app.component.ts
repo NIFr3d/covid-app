@@ -11,6 +11,7 @@ export class AppComponent {
 
   title = 'vaccination-app';
   isLoggedIn = this.storageService.isLoggedIn();
+  canSeeGestion = this.storageService.isAdmin() || this.storageService.isMedecin() || this.storageService.isSuperAdmin();
   nom? : string;
   prenom? : string;
 

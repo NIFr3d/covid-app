@@ -3,5 +3,6 @@ export interface User {
     roles : string[],
     nom: string,
     prenom: string,
-    email: string
+    email: string,
+    centre: string | null,
 }

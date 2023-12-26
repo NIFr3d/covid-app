@@ -6,12 +6,26 @@
     </mat-card-header>
     <mat-card-content>
         <mat-form-field>
-            <input type="text" matInput placeholder="Rechercher" name="search" [(ngModel)]= "searchText" (ngModelChange)="updateList()">
+            <mat-label for="search">Rechercher par ville</mat-label>
+            <input type="text" matInput placeholder="Ville" name="search" [(ngModel)]= "searchText" (ngModelChange)="updateList()">
             <button matSuffix mat-button><mat-icon >search</mat-icon></button>
         </mat-form-field>
         <br>
-        <ul *ngFor="let center of filteredCenters">
-            <a routerLink="/center/{{center.id}}">{{center.nom}}</a>
-        </ul>
+        <mat-table [dataSource]="filteredCenters">
+            <ng-container matColumnDef="nom">
+                <mat-header-cell *matHeaderCellDef>Nom</mat-header-cell>
+                <mat-cell *matCellDef="let center"><a routerLink="/center/{{center.id}}">{{center.nom}}</a></mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="ville">
+                <mat-header-cell *matHeaderCellDef>Ville</mat-header-cell>
+                <mat-cell *matCellDef="let center">{{center.ville}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="adresse">
+                <mat-header-cell *matHeaderCellDef>Adresse</mat-header-cell>
+                <mat-cell *matCellDef="let center">{{center.adresse}}</mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="['nom', 'ville', 'adresse']"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: ['nom', 'ville', 'adresse']"></mat-row>
+        </mat-table>
     </mat-card-content>
 </mat-card>

@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.polytech.covidapi.entities.Centre;
 import org.polytech.covidapi.entities.ERole;
 import org.polytech.covidapi.entities.Utilisateur;
 import org.polytech.covidapi.repositories.UtilisateurRepository;
@@ -61,5 +62,18 @@ public class UtilisateurService implements UserDetailsService{
 
     public void deleteUser(Utilisateur utilisateur) {
         utilisateurRepository.delete(utilisateur);
+    }
+
+    public void updateUserRolesAndCenter(String email, List<String> roles, Centre centre) {
+        if(utilisateurRepository.findByEmail(email).isPresent()){
+            Utilisateur utilisateur = utilisateurRepository.findByEmail(email).get();
+            List<ERole> rolesArray = new ArrayList<ERole>();
+            roles.forEach(role -> {
+                rolesArray.add(ERole.valueOf(role));
+            });
+            utilisateur.setRoles(rolesArray);
+            utilisateur.setCentre(centre);
+            utilisateurRepository.save(utilisateur);
+        }
     }
 }

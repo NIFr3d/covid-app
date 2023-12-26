@@ -3,13 +3,16 @@ package org.polytech.covidapi.entities;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -31,6 +34,8 @@ public class Utilisateur {
     private Date dateInscription;
     private boolean isVaccine;
     private String password;
+    @ManyToOne(optional = true)
+    private Centre centre;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<ERole> roles;
@@ -39,6 +44,18 @@ public class Utilisateur {
     private List<Reservation> reservations;
 
 
+    public Utilisateur(String email , String nom , String prenom , String telephone , String password, Centre centre) {
+        this.email = email;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.telephone = telephone;
+        this.password = password;
+        this.dateInscription = new Date(System.currentTimeMillis());
+        this.isVaccine = false;
+        this.reservations = new ArrayList<Reservation>();
+        this.roles = List.of(ERole.USER);
+        this.centre = centre;
+    }
     public Utilisateur(String email , String nom , String prenom , String telephone , String password) {
         this.email = email;
         this.nom = nom;
@@ -49,6 +66,7 @@ public class Utilisateur {
         this.isVaccine = false;
         this.reservations = new ArrayList<Reservation>();
         this.roles = List.of(ERole.USER);
+        this.centre = null;
     }
     public String getEmail() {
         return this.email;
@@ -74,6 +92,9 @@ public class Utilisateur {
     public String getTelephone() {
         return this.telephone;
     }
+    public Centre getCentre() {
+        return this.centre;
+    }
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -88,5 +109,8 @@ public class Utilisateur {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    public void setCentre(Centre centre) {
+        this.centre = centre;
     }
 }

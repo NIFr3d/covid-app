@@ -41,7 +41,16 @@ export class StorageService {
     return false;
   }
 
+  public isSuperAdmin() : boolean {
+    const user = this.getUser();
+    if (user) {
+      return user.roles.includes('SUPERADMIN');
+    }
+    return false;
+  }
+
   public isLoggedIn() : boolean {
     return this.getUser() !== null;
   }
 }
+

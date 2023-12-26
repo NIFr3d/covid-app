@@ -1,4 +1,6 @@
 package org.polytech.covidapi.controllers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -6,6 +8,7 @@ import org.polytech.covidapi.entities.Utilisateur;
 import org.polytech.covidapi.payload.request.UpdateUserInfoRequest;
 import org.polytech.covidapi.payload.request.UpdateUserPasswordRequest;
 import org.polytech.covidapi.payload.request.UpdateUserRequest;
+import org.polytech.covidapi.services.CentreService;
 import org.polytech.covidapi.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +31,10 @@ public class UserController {
     @Autowired
     private UtilisateurService utilisateurService;
     @Autowired
+    private CentreService centreService;
+    @Autowired
     PasswordEncoder passwordEncoder;
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 
     @GetMapping(path = "/getUserInfos")
@@ -81,7 +87,7 @@ public class UserController {
 
     @PostMapping(path = "/admin/searchUser")
     public ResponseEntity<?> searchUser(@RequestParam String email){
-        return ResponseEntity.ok().body(utilisateurService.findByEmailStartsWith(email).stream().map(utilisateur -> Map.of("nom", utilisateur.getNom(), "prenom", utilisateur.getPrenom(), "telephone", utilisateur.getTelephone(), "email", utilisateur.getEmail(), "roles", utilisateur.getRoles())).toArray());
+        return ResponseEntity.ok().body(utilisateurService.findByEmailStartsWith(email).stream().map(utilisateur -> Map.of("nom", utilisateur.getNom(), "prenom", utilisateur.getPrenom(), "telephone", utilisateur.getTelephone(), "email", utilisateur.getEmail(), "roles", utilisateur.getRoles(), "centre", utilisateur.getCentre() == null ? "" : utilisateur.getCentre().getNom())).toArray());
     }
 
     @PostMapping(path = "/admin/updateUser")
@@ -91,6 +97,20 @@ public class UserController {
         }
         if(updateUserRequest.getRoles().isEmpty()){
             return ResponseEntity.badRequest().body("{ \"message\": \"Veuillez choisir au moins un rôle\"}");
+        }
+        if(updateUserRequest.getRoles().contains("ADMIN") || updateUserRequest.getRoles().contains("MEDECIN")){
+            if(updateUserRequest.getCentre() == null){
+                return ResponseEntity.badRequest().body("{ \"message\": \"Veuillez choisir un centre\"}");
+            }
+            else{
+                if(!centreService.getCentreById(updateUserRequest.getCentre()).isPresent()){
+                    return ResponseEntity.badRequest().body("{ \"message\": \"Centre non trouvé\"}");
+                }
+                 else{
+                    utilisateurService.updateUserRolesAndCenter(updateUserRequest.getEmail(), updateUserRequest.getRoles(),centreService.getCentreById(updateUserRequest.getCentre()).get());
+                    return ResponseEntity.ok().body("{ \"message\": \"Utilisateur mis à jour avec succès\"}");
+                }
+            } 
         }
         utilisateurService.updateUserRoles(updateUserRequest.getEmail(), updateUserRequest.getRoles());
         return ResponseEntity.ok().body("{ \"message\": \"Utilisateur mis à jour avec succès\"}");

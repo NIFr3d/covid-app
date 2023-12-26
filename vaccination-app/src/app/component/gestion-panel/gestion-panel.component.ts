@@ -10,6 +10,7 @@ export class GestionPanelComponent {
 
   isAdmin : boolean = this.storageService.isAdmin();
   isMedecin : boolean = this.storageService.isMedecin();
+  isSuperAdmin : boolean = this.storageService.isSuperAdmin();
   
   constructor(private storageService : StorageService) { }
 

@@ -13,6 +13,8 @@ public class UpdateUserRequest {
     private String telephone;
     @NotBlank
     private String email;
+    
+    private Integer centre;
 
     private List<String> roles;
     
@@ -30,5 +32,8 @@ public class UpdateUserRequest {
     }
     public List<String> getRoles() {
         return roles;
+    }
+    public Integer getCentre() {
+        return centre;
     }
 }

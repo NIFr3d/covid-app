@@ -26,7 +26,7 @@ export class VaccinationCenterListComponent implements OnInit{
 
   updateList() : void {
     this.filteredCenters = this.centers.filter((center) => {
-      return center.nom.toLowerCase().includes(this.searchText?.toLowerCase() ?? '');
+      return center.ville.toLowerCase().includes(this.searchText?.toLowerCase() ?? '');
     });
   }
 }

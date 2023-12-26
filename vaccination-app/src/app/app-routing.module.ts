@@ -18,7 +18,7 @@ import { GestionCenterEditComponent } from './component/gestion-center-edit/gest
 import { GestionCenterAddComponent } from './component/gestion-center-add/gestion-center-add.component';
 import { GestionReservationPannelComponent } from './component/gestion-reservation-pannel/gestion-reservation-pannel.component';
 
-import { authGuard, medecinGuard, adminGuard } from './auth.guard';
+import { authGuard, medecinGuard, adminGuard, superAdminGuard } from './auth.guard';
 
 const routes: Routes = [
   {path:"centers", component: VaccinationCenterListComponent},
@@ -34,9 +34,9 @@ const routes: Routes = [
   {path:"management", component: GestionPanelComponent, canActivate: [medecinGuard], children: [
     {path:"reservations", component: GestionReservationPannelComponent, canActivate: [medecinGuard]},
     {path:"reservationsByCentre/:id", component: GestionReservationListComponent, canActivate: [medecinGuard]},
-    {path:"centers", component: GestionCenterListComponent, canActivate: [adminGuard]},
+    {path:"centers", component: GestionCenterListComponent, canActivate: [superAdminGuard]},
     {path:"users", component: GestionUserListComponent, canActivate: [adminGuard]},
-    {path:"center/:id", component: GestionCenterEditComponent, canActivate: [adminGuard]},
+    {path:"center/:id", component: GestionCenterEditComponent, canActivate: [superAdminGuard]},
     {path:"addCenter", component: GestionCenterAddComponent, canActivate: [adminGuard]}
   ]},
   {path:"", redirectTo:"/home", pathMatch:"full"}

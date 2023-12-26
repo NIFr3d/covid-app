@@ -12,7 +12,7 @@
             <span class="spacer"></span>
             <button mat-button routerLink="/login" *ngIf="!isLoggedIn">Se connecter</button>
             <div *ngIf="isLoggedIn">
-                <button mat-button routerLink="/management">Gestion</button>
+                <button *ngIf="canSeeGestion" mat-button routerLink="/management">Gestion</button>
                 <button [matMenuTriggerFor]="menuNav" mat-button>
                     <mat-icon>account_circle</mat-icon>
                     {{prenom}} {{nom}}
