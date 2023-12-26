@@ -46,7 +46,7 @@ export class GestionReservationPannelComponent {
     if(!confirm("Êtes-vous sûr de vouloir valider cette vaccination ?")) return;
     this.reservationService.confirmVaccination(id).subscribe({
       next: (data: any) => {
-        this.reservations = this.reservations?.filter(r => r.id !== id);
+        this.searchByUser();
         this.snackBar.open(data.message, "OK", {
           duration: 2000,
         });
@@ -63,7 +63,7 @@ export class GestionReservationPannelComponent {
     if(!confirm("Êtes-vous sûr de vouloir supprimer cette réservation ?")) return;
     this.reservationService.deleteReservation(id).subscribe({
       next: (data: any) => {
-        this.reservations = this.reservations?.filter(r => r.id !== id);
+        this.searchByUser();
         this.snackBar.open(data.message, "OK", {
           duration: 2000,
         });

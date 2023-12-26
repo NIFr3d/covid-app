@@ -26,7 +26,7 @@ export class ReservationService {
   }
 
   getReservationsByUser(){
-    return this.http.get('/api/reservation/medecin/getReservationsByUser');
+    return this.http.get('/api/reservation/getReservationsByUser');
   }
 
   cancelReservation(id : number){

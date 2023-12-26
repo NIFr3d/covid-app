@@ -23,8 +23,13 @@
       <mat-list *ngIf="reservations.length > 0">
         <mat-list-item *ngFor="let reservation of reservations">
           {{reservation.userNom}} {{reservation.userPrenom}} - {{reservation.date | date:'HH:mm'}}
-          <button mat-raised-button color="primary" (click)="confirmVaccination(reservation.id)">Valider la vaccination</button>
-          <button mat-button color="warn" (click)="deleteReservation(reservation.id)" *ngIf="isAdmin">Supprimer</button>
+          <ng-container *ngIf="!reservation.done">
+            <button mat-raised-button color="primary" (click)="confirmVaccination(reservation.id)">Valider la vaccination</button>
+            <button mat-button color="warn" (click)="deleteReservation(reservation.id)" *ngIf="isAdmin">Supprimer</button>
+          </ng-container>
+          <ng-container *ngIf="reservation.done">
+            <button mat-raised-button color="primary" disabled>Effectuée</button>
+          </ng-container>
           </mat-list-item>
       </mat-list>
     </mat-expansion-panel>

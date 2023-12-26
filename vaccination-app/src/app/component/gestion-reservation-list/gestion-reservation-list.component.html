@@ -13,7 +13,8 @@
     <mat-list *ngIf="reservations && reservations.length > 0">
         <mat-list-item *ngFor="let reservation of reservations">
         {{reservation.userNom}} {{reservation.userPrenom}} - {{reservation.date | date:'HH:mm'}}
-        <button mat-button color="warn" (click)="deleteReservation(reservation.id)" *ngIf="isAdmin">Supprimer</button>
+        <button mat-button color="warn" (click)="deleteReservation(reservation.id)" *ngIf="isAdmin && !reservation.done">Supprimer</button>
+        <button mat-raised-button color="primary" disabled *ngIf="reservation.done">Effectuée</button>
         </mat-list-item>
     </mat-list>
     <button mat-button (click)="selectedDay = undefined">Retour au calendrier</button>

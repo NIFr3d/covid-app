@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.polytech.covidapi.entities.Reservation;
 import org.polytech.covidapi.entities.Utilisateur;
+import org.polytech.covidapi.services.CentreService;
 import org.polytech.covidapi.services.ReservationService;
 import org.polytech.covidapi.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class ReservationController {
     private ReservationService reservationService;
     @Autowired
     private UtilisateurService utilisateurService;
+    @Autowired
+    private CentreService centreService;
 
 
     @PostMapping(path="/makeReservation")
@@ -60,16 +63,17 @@ public class ReservationController {
             if(utilisateurs.size() > 0) utilisateurs.retainAll(utilisateurService.findByPrenomStartsWith(prenom));
             else utilisateurs.addAll(utilisateurService.findByPrenomStartsWith(prenom));
         }
-        List<Reservation> reservations = reservationService.getReservationsByMedecinSearch(utilisateurs, centreId);
-        return ResponseEntity.ok().body(reservations.stream().map(reservation -> Map.of("id", reservation.getId(), "date", reservation.getDate().getTime(), "centreId", reservation.getCentre().getId(), "userNom", reservation.getUtilisateur().getNom(), "userPrenom", reservation.getUtilisateur().getPrenom(), "userEmail", reservation.getUtilisateur().getEmail())).toArray());
+        if(centreService.findById(centreId).isEmpty()) return ResponseEntity.badRequest().body("{ \"message\": \"Centre non trouvé\"}");
+        List<Reservation> reservations = reservationService.getReservationsByMedecinSearch(utilisateurs, centreService.findById(centreId).get());
+        return ResponseEntity.ok().body(reservations.stream().map(reservation -> Map.of("id", reservation.getId(), "date", reservation.getDate().getTime(), "centreId", reservation.getCentre().getId(), "userNom", reservation.getUtilisateur().getNom(), "userPrenom", reservation.getUtilisateur().getPrenom(), "userEmail", reservation.getUtilisateur().getEmail(), "done", reservation.getDone() ? 1 : 0)).toArray());
     }
 
 
-    @GetMapping(path="/medecin/getReservationsByUser")
+    @GetMapping(path="/getReservationsByUser")
     public ResponseEntity<?> getReservationsByUser(){
         String userEmail = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         List<Reservation> reservations = reservationService.getReservationsByUser(userEmail);
-        return ResponseEntity.ok().body(reservations.stream().map(reservation -> Map.of("id", reservation.getId(), "date", reservation.getDate().getTime(), "centre", reservation.getCentre())).toArray());
+        return ResponseEntity.ok().body(reservations.stream().map(reservation -> Map.of("id", reservation.getId(), "date", reservation.getDate().getTime(), "centre", reservation.getCentre(), "done", reservation.getDone() ? 1 : 0)).toArray());
     }
 
     @DeleteMapping(path="/cancelReservation/{id}")
@@ -84,7 +88,7 @@ public class ReservationController {
     @GetMapping(path="/medecin/getReservationsForDayByCentre/{centreId}/{date}")
     public ResponseEntity<?> getReservationsForDayByCentre(@PathVariable Integer centreId, @PathVariable long date){
         List<Reservation> reservations = reservationService.getReservationsForDayByCentre(centreId, new Timestamp(date));
-        return ResponseEntity.ok().body(reservations.stream().map(reservation -> Map.of("id", reservation.getId(), "date", reservation.getDate().getTime(), "centreId", reservation.getCentre().getId(), "userNom", reservation.getUtilisateur().getNom(), "userPrenom", reservation.getUtilisateur().getPrenom(), "userEmail", reservation.getUtilisateur().getEmail())).toArray());
+        return ResponseEntity.ok().body(reservations.stream().map(reservation -> Map.of("id", reservation.getId(), "date", reservation.getDate().getTime(), "centreId", reservation.getCentre().getId(), "userNom", reservation.getUtilisateur().getNom(), "userPrenom", reservation.getUtilisateur().getPrenom(), "userEmail", reservation.getUtilisateur().getEmail(), "done", reservation.getDone() ? 1 : 0)).toArray());
     }
     @DeleteMapping(path="/medecin/deleteReservation/{id}")
     public ResponseEntity<?> deleteReservation(@PathVariable Integer id){

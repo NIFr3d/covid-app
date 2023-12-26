@@ -19,6 +19,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     List<Reservation> findAllByUtilisateur(Utilisateur utilisateur);
 
-    List<Reservation> findAllByUtilisateurInAndId(List<Utilisateur> utilisateurs, Integer id);
+    List<Reservation> findAllByUtilisateurInAndCentre(List<Utilisateur> utilisateurs, Centre centre);
 
 }

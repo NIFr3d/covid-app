@@ -29,7 +29,8 @@
             <ng-container matColumnDef="cancel">
                 <th mat-header-cell *matHeaderCellDef>Annuler</th>
                 <td mat-cell *matCellDef="let reservation">
-                    <button mat-raised-button color="warn" (click)="cancelReservation(reservation.id)">Annuler</button>
+                    <button mat-raised-button color="primary" disabled *ngIf="reservation.done">Effectuée</button>
+                    <button mat-raised-button color="warn" (click)="cancelReservation(reservation.id)" *ngIf="!reservation.done">Annuler</button>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

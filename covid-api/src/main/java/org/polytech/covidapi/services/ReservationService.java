@@ -104,8 +104,8 @@ public class ReservationService {
     }
 
 
-    public List<Reservation> getReservationsByMedecinSearch(List<Utilisateur> utilisateurs, Integer centreId) {
-        return reservationRepository.findAllByUtilisateurInAndId(utilisateurs,centreId);
+    public List<Reservation> getReservationsByMedecinSearch(List<Utilisateur> utilisateurs, Centre centre) {
+        return reservationRepository.findAllByUtilisateurInAndCentre(utilisateurs,centre);
     }
 
 
