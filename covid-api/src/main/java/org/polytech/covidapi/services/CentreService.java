@@ -32,10 +32,6 @@ public class CentreService {
     public void deleteCenter(Integer id) {
         centreRepository.deleteById(id);
     }
-
-    public Optional<Centre> findById(Integer centreId) {
-        return centreRepository.findById(centreId);
-    }
 }
 
 

@@ -63,8 +63,8 @@ public class ReservationController {
             if(utilisateurs.size() > 0) utilisateurs.retainAll(utilisateurService.findByPrenomStartsWith(prenom));
             else utilisateurs.addAll(utilisateurService.findByPrenomStartsWith(prenom));
         }
-        if(centreService.findById(centreId).isEmpty()) return ResponseEntity.badRequest().body("{ \"message\": \"Centre non trouvé\"}");
-        List<Reservation> reservations = reservationService.getReservationsByMedecinSearch(utilisateurs, centreService.findById(centreId).get());
+        if(centreService.getCentreById(centreId).isEmpty()) return ResponseEntity.badRequest().body("{ \"message\": \"Centre non trouvé\"}");
+        List<Reservation> reservations = reservationService.getReservationsByMedecinSearch(utilisateurs, centreService.getCentreById(centreId).get());
         return ResponseEntity.ok().body(reservations.stream().map(reservation -> Map.of("id", reservation.getId(), "date", reservation.getDate().getTime(), "centreId", reservation.getCentre().getId(), "userNom", reservation.getUtilisateur().getNom(), "userPrenom", reservation.getUtilisateur().getPrenom(), "userEmail", reservation.getUtilisateur().getEmail(), "done", reservation.getDone() ? 1 : 0)).toArray());
     }
 

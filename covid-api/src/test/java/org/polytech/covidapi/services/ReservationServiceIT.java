@@ -41,7 +41,23 @@ public class ReservationServiceIT {
         reservationRepository.save(r1);
 
         assert(reservationService.getReservationsFromToByCentre(datefrom, dateto, 1).size() > 0);
+        reservationRepository.delete(r1);
+    }
 
+    @Test
+    void getReservationsByMedecinSearchTest() {
+        Reservation r1 = new Reservation(new Timestamp(0),utilisateurRepository.findByEmail("utilisateur@utilisateur.fr").get(),centreRepository.findById(1).get());
+        reservationRepository.save(r1);
+        assert(reservationService.getReservationsByMedecinSearch(utilisateurRepository.findAll(), centreRepository.findById(1).get()).size() > 0);
+        reservationRepository.delete(r1);
+    }
+
+    @Test
+    void confirmVaccinationTest() {
+        Reservation r1 = new Reservation(new Timestamp(0),utilisateurRepository.findByEmail("utilisateur@utilisateur.fr").get(),centreRepository.findById(1).get());
+        reservationRepository.save(r1);
+        assert(reservationService.confirmVaccination(r1.getId()));
+        reservationRepository.delete(r1);
     }
 }
 
