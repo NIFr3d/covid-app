@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Reservation } from 'src/app/entities/reservation';
 import { VaccinationCenter } from 'src/app/entities/vaccination-center';
 import { CenterService } from 'src/app/service/center.service';
 import { ReservationService } from 'src/app/service/reservation.service';
+import { StorageService } from 'src/app/service/storage.service';
 
 @Component({
   selector: 'app-gestion-reservation-list',
@@ -14,21 +16,23 @@ import { ReservationService } from 'src/app/service/reservation.service';
 export class GestionReservationListComponent implements OnInit {
   selectedDay?: Date;
   reservations?: Reservation[];
+  isAdmin : boolean = this.storageService.isAdmin();
+  @Input()
   centre!: VaccinationCenter;
 
   constructor(private reservationService: ReservationService,
     private centreService: CenterService,
-    private route : ActivatedRoute) { }
+    private route : ActivatedRoute,
+    private storageService : StorageService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() : void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.centreService.getCenterById(id).subscribe((centre) => {
-      this.centre = centre;
-    });
   }
 
   selectDate(date : Date | null){
-    console.log(date);
+    if(date) {
+      this.onDaySelected(date);
+    }
   }
 
   disableWeekendsFilter = (d: Date): boolean => {
@@ -56,11 +60,18 @@ export class GestionReservationListComponent implements OnInit {
 
   deleteReservation(id: string) {
     if(!confirm("Êtes-vous sûr de vouloir supprimer cette réservation ?")) return;
-    this.reservationService.deleteReservation(id)
-      .subscribe(() => {
-        if (this.reservations) {
-          this.reservations = this.reservations.filter(r => r.id !== id);
-        }
-      });
+    this.reservationService.deleteReservation(id).subscribe({
+      next: (data: any) => {
+        this.reservations = this.reservations?.filter(r => r.id !== id);
+        this.snackBar.open(data.message, "OK", {
+          duration: 2000,
+        });
+      },
+      error: (error: any) => {
+        this.snackBar.open(error, "Fermer", {
+          duration: 2000,
+        });
+      }
+    });
   }
 }

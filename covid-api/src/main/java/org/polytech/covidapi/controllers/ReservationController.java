@@ -1,11 +1,14 @@
 package org.polytech.covidapi.controllers;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.polytech.covidapi.entities.Reservation;
+import org.polytech.covidapi.entities.Utilisateur;
 import org.polytech.covidapi.services.ReservationService;
+import org.polytech.covidapi.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReservationController {
     @Autowired
     private ReservationService reservationService;
+    @Autowired
+    private UtilisateurService utilisateurService;
 
 
     @PostMapping(path="/makeReservation")
@@ -43,7 +48,24 @@ public class ReservationController {
         return ResponseEntity.ok().body(reservations.stream().map(Reservation::getDate).map(Timestamp::getTime).toArray());
     }
 
-    @GetMapping(path="/getReservationsByUser")
+    @GetMapping(path="/medecin/getReservationsByMedecinSearch")
+    public ResponseEntity<?> getReservationsByMedecinSearch(@RequestParam String email, @RequestParam String nom, @RequestParam String prenom, @RequestParam Integer centreId){
+        List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+        if(email.length() > 0) utilisateurs.addAll(utilisateurService.findByEmailStartsWith(email));
+        if(nom.length() > 0){
+            if(utilisateurs.size() > 0) utilisateurs.retainAll(utilisateurService.findByNomStartsWith(nom));
+            else utilisateurs.addAll(utilisateurService.findByNomStartsWith(nom));
+        }
+        if(prenom.length() > 3) {
+            if(utilisateurs.size() > 0) utilisateurs.retainAll(utilisateurService.findByPrenomStartsWith(prenom));
+            else utilisateurs.addAll(utilisateurService.findByPrenomStartsWith(prenom));
+        }
+        List<Reservation> reservations = reservationService.getReservationsByMedecinSearch(utilisateurs, centreId);
+        return ResponseEntity.ok().body(reservations.stream().map(reservation -> Map.of("id", reservation.getId(), "date", reservation.getDate().getTime(), "centreId", reservation.getCentre().getId(), "userNom", reservation.getUtilisateur().getNom(), "userPrenom", reservation.getUtilisateur().getPrenom(), "userEmail", reservation.getUtilisateur().getEmail())).toArray());
+    }
+
+
+    @GetMapping(path="/medecin/getReservationsByUser")
     public ResponseEntity<?> getReservationsByUser(){
         String userEmail = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         List<Reservation> reservations = reservationService.getReservationsByUser(userEmail);
@@ -59,11 +81,27 @@ public class ReservationController {
         return ResponseEntity.badRequest().body("{ \"message\": \"Une erreur est survenue\"}");
     }
 
-    @GetMapping(path="/getReservationsForDayByCentre/{centreId}/{date}")
+    @GetMapping(path="/medecin/getReservationsForDayByCentre/{centreId}/{date}")
     public ResponseEntity<?> getReservationsForDayByCentre(@PathVariable Integer centreId, @PathVariable long date){
         List<Reservation> reservations = reservationService.getReservationsForDayByCentre(centreId, new Timestamp(date));
-        return ResponseEntity.ok().body(reservations.stream().map(reservation -> Map.of("id", reservation.getId(), "date", reservation.getDate().getTime(), "centreId", reservation.getCentre().getId(), "utilisateur", reservation.getUtilisateur())).toArray());
+        return ResponseEntity.ok().body(reservations.stream().map(reservation -> Map.of("id", reservation.getId(), "date", reservation.getDate().getTime(), "centreId", reservation.getCentre().getId(), "userNom", reservation.getUtilisateur().getNom(), "userPrenom", reservation.getUtilisateur().getPrenom(), "userEmail", reservation.getUtilisateur().getEmail())).toArray());
     }
+    @DeleteMapping(path="/medecin/deleteReservation/{id}")
+    public ResponseEntity<?> deleteReservation(@PathVariable Integer id){
+        if(reservationService.deleteReservation(id)){
+            return ResponseEntity.ok().body("{ \"message\": \"Réservation supprimée avec succès\"}");
+        }
+        return ResponseEntity.badRequest().body("{ \"message\": \"Une erreur est survenue\"}");
+    }
+
+    @PostMapping(path="/medecin/confirmVaccination/{id}")
+    public ResponseEntity<?> confirmVaccination(@PathVariable Integer id){
+        if(reservationService.confirmVaccination(id)){
+            return ResponseEntity.ok().body("{ \"message\": \"Vaccination confirmée avec succès\"}");
+        }
+        return ResponseEntity.badRequest().body("{ \"message\": \"Une erreur est survenue\"}");
+    }
+
 
 
 

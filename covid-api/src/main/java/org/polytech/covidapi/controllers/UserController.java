@@ -42,7 +42,7 @@ public class UserController {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(utilisateurService.findByEmail(user.getUsername()).isPresent()){
             Utilisateur utilisateur = utilisateurService.findByEmail(user.getUsername()).get();
-            return ResponseEntity.ok().body("{ \"nom\": \""+ utilisateur.getNom()+"\", \"prenom\": \""+ utilisateur.getPrenom()+"\", \"telephone\": \""+ utilisateur.getTelephone()+"\", \"email\": \""+ utilisateur.getEmail()+"\"}");
+            return ResponseEntity.ok().body("{ \"nom\": \""+ utilisateur.getNom()+"\", \"prenom\": \""+ utilisateur.getPrenom()+"\", \"telephone\": \""+ utilisateur.getTelephone()+"\", \"email\": \""+ utilisateur.getEmail()+"\", \"isVaccine\": \"" + utilisateur.isVaccine()+ "\"}");
         }
         return ResponseEntity.badRequest().body("{ \"message\": \"Utilisateur non trouvé\"}");
     }

@@ -4,5 +4,8 @@ export interface Reservation {
     id: string,
     date: Date,
     centreId: string,
-    user: User
+    done: boolean,
+    userNom: string,
+    userPrenom: string,
+    userEmail: string,
 }

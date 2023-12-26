@@ -81,6 +81,14 @@ public class ReservationService {
         return true;
     }
 
+    public boolean deleteReservation(Integer id) {
+        if(reservationRepository.findById(id).isEmpty()) {
+            return false;
+        }
+        reservationRepository.deleteById(id);
+        return true;
+    }
+
     public List<Reservation> getReservationsForDayByCentre(Integer centreId, Timestamp date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -94,8 +102,24 @@ public class ReservationService {
         Timestamp dateTo = new Timestamp(calendar.getTimeInMillis());
         return reservationRepository.findAllByDateBetweenAndCentre(dateFrom, dateTo, centreRepository.findById(centreId).get());
     }
-    
-    public void deleteReservation(Integer id) {
-        reservationRepository.deleteById(id);
+
+
+    public List<Reservation> getReservationsByMedecinSearch(List<Utilisateur> utilisateurs, Integer centreId) {
+        return reservationRepository.findAllByUtilisateurInAndId(utilisateurs,centreId);
     }
+
+
+    public boolean confirmVaccination(Integer id) {
+        if(reservationRepository.findById(id).isEmpty()) {
+            return false;
+        }
+        Reservation reservation = reservationRepository.findById(id).get();
+        reservation.setDone(true);
+        Utilisateur user = reservation.getUtilisateur();
+        user.setVaccine(true);
+        utilisateurRepository.save(user);
+        reservationRepository.save(reservation);
+        return true;
+    }
+    
 }

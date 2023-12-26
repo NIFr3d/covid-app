@@ -7,31 +7,34 @@
       </mat-expansion-panel-header>
       <form (ngSubmit)="searchByUser()">
         <mat-form-field>
+          <mat-label>Email</mat-label>
           <input matInput placeholder="Email" [(ngModel)]="userEmail" name="email">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Nom et prénom" [(ngModel)]="userName" name="name">
+          <mat-label>Nom</mat-label>
+          <input matInput placeholder="Nom" [(ngModel)]="userNom" name="nom">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Prénom</mat-label>
+          <input matInput placeholder="Prénom" [(ngModel)]="userPrenom" name="prenom">
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit">Rechercher</button>
       </form>
+      <mat-list *ngIf="reservations.length > 0">
+        <mat-list-item *ngFor="let reservation of reservations">
+          {{reservation.userNom}} {{reservation.userPrenom}} - {{reservation.date | date:'HH:mm'}}
+          <button mat-raised-button color="primary" (click)="confirmVaccination(reservation.id)">Valider la vaccination</button>
+          <button mat-button color="warn" (click)="deleteReservation(reservation.id)" *ngIf="isAdmin">Supprimer</button>
+          </mat-list-item>
+      </mat-list>
     </mat-expansion-panel>
   
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Recherche par centre
+          Recherche par date
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <form (ngSubmit)="searchByCentre()">
-        <mat-form-field>
-          <input matInput placeholder="Nom du centre" [(ngModel)]="centreName" name="centre">
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Rechercher</button>
-      </form>
-      <mat-list>
-        <mat-list-item *ngFor="let centre of filteredCentres">
-          <a routerLink="/management/reservationsByCentre/{{centre.id}}">{{centre.nom}}</a> 
-        </mat-list-item>
-      </mat-list>
+      <app-gestion-reservation-list [centre]="centre"></app-gestion-reservation-list>
     </mat-expansion-panel>
   </mat-accordion>

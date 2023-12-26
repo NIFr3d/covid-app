@@ -2,6 +2,7 @@ package org.polytech.covidapi.services;
 
 import java.util.Optional;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.polytech.covidapi.entities.Centre;
@@ -75,5 +76,13 @@ public class UtilisateurService implements UserDetailsService{
             utilisateur.setCentre(centre);
             utilisateurRepository.save(utilisateur);
         }
+    }
+
+    public List<Utilisateur> findByNomStartsWith(String nom) {
+        return utilisateurRepository.findByNomStartsWith(nom);
+    }
+
+    public List<Utilisateur> findByPrenomStartsWith(String prenom) {
+        return utilisateurRepository.findByPrenomStartsWith(prenom);
     }
 }

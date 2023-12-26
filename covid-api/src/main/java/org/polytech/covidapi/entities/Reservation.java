@@ -30,6 +30,9 @@ public class Reservation {
     @JsonProperty("centerId")
     private Centre centre;
 
+    @JsonProperty("done")
+    private boolean done = false;
+
     public Reservation(Timestamp date, Utilisateur utilisateur, Centre centre) {
         this.date = date;
         this.utilisateur = utilisateur;
@@ -47,6 +50,9 @@ public class Reservation {
     }
     public Integer getId() {
         return id;
+    }
+    public void setDone(boolean done) {
+        this.done = done;
     }
 
 }

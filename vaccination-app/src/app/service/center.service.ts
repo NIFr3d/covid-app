@@ -7,8 +7,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CenterService {
+
+ 
   constructor(private httpClient : HttpClient) { }
 
+  getVaccinationCenterForMedecin(): Observable<VaccinationCenter> {
+    return this.httpClient.get<VaccinationCenter>("/api/center/medecin/getCenterForMedecin");
+  }
 
   getCenterById(id: number): Observable<VaccinationCenter> {
     return this.httpClient.get<VaccinationCenter>("/api/center/getById/"+id);

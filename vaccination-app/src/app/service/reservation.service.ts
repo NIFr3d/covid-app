@@ -19,9 +19,14 @@ export class ReservationService {
     const body = { from, to, centreId };
     return this.http.get('/api/reservation/getReservationsFromTo', {params: body});
   }
+  
+  getReservationsByMedecinSearch(email : string, nom : string, prenom : string, centreId : number){
+    const body = { email, nom, prenom, centreId };
+    return this.http.get<Reservation[]>('/api/reservation/medecin/getReservationsByMedecinSearch', {params: body});
+  }
 
   getReservationsByUser(){
-    return this.http.get('/api/reservation/getReservationsByUser');
+    return this.http.get('/api/reservation/medecin/getReservationsByUser');
   }
 
   cancelReservation(id : number){
@@ -29,10 +34,14 @@ export class ReservationService {
   }
 
   getReservationsForDayByCentre(date : Date, centreId : string): Observable<Reservation[]>{
-    return this.http.get<Reservation[]>('/api/reservation/getReservationsForDayByCentre/'+centreId+'/'+date.getTime());
+    return this.http.get<Reservation[]>('/api/reservation/medecin/getReservationsForDayByCentre/'+centreId+'/'+date.getTime());
   }
 
   deleteReservation(id : string){
-    return this.http.delete('/api/reservation/deleteReservation/'+id);
+    return this.http.delete('/api/reservation/medecin/deleteReservation/'+id);
+  }
+
+  confirmVaccination(id : string){
+    return this.http.post('/api/reservation/medecin/confirmVaccination/'+id, null);
   }
 }

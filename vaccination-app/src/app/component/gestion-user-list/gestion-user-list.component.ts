@@ -97,7 +97,6 @@ export class GestionUserListComponent {
         this.searchUsers();
       },
       error: (error: any) => {
-        console.error(error);
         this.snackBar.open(error, 'Fermer', {
           duration: 5000, // La notification disparaîtra après 5 secondes
           verticalPosition: 'top', // La notification apparaîtra en haut de la page

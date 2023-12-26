@@ -1,5 +1,5 @@
-<mat-card>
-<mat-card-title>Gestion des réservations du centre {{centre.nom}}</mat-card-title>
+<mat-card *ngIf="!selectedDay">
+<mat-card-title *ngIf="centre">Gestion des réservations du centre {{centre.nom}}</mat-card-title>
 <mat-card-content>
     <mat-calendar [dateClass]="dateClass" [dateFilter]="disableWeekendsFilter" (selectedChange)="selectDate($event)"></mat-calendar> <!-- ici bug -->
 </mat-card-content>
@@ -7,10 +7,14 @@
 
 <ng-container *ngIf="selectedDay">
     <h2>Réservations pour {{selectedDay | date}}</h2>
-    <mat-list>
+    <div *ngIf="reservations && reservations.length == 0">
+        <p>Aucune réservation pour ce jour</p>
+    </div>
+    <mat-list *ngIf="reservations && reservations.length > 0">
         <mat-list-item *ngFor="let reservation of reservations">
-        {{reservation.user.nom}} {{reservation.user.prenom}} - {{reservation.date | date:'HH:mm'}}}
-        <button mat-button color="warn" (click)="deleteReservation(reservation.id)">Supprimer</button>
+        {{reservation.userNom}} {{reservation.userPrenom}} - {{reservation.date | date:'HH:mm'}}
+        <button mat-button color="warn" (click)="deleteReservation(reservation.id)" *ngIf="isAdmin">Supprimer</button>
         </mat-list-item>
     </mat-list>
+    <button mat-button (click)="selectedDay = undefined">Retour au calendrier</button>
 </ng-container>

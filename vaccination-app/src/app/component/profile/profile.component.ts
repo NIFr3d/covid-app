@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -8,6 +8,7 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class ProfileComponent {
 
+  isVaccine = "false";
   credentials = { email: '', oldPassword: '', password: '', password2:'' , nom: '', prenom: '', telephone: '' };
   samePasswordError = false;
   passwordLengthError = false;
@@ -22,10 +23,13 @@ export class ProfileComponent {
       this.credentials.nom = data.nom;
       this.credentials.prenom = data.prenom;
       this.credentials.telephone = data.telephone;
+      this.isVaccine = data.isVaccine;
+      console.log(data);
     });
     this.passVerif();
    }
 
+  
   passVerif() : void {
     if(this.credentials.password !== this.credentials.password2) {
       this.samePasswordError = true;

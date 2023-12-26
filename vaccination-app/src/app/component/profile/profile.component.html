@@ -9,6 +9,15 @@
             <mat-icon>error</mat-icon>
             {{errorMessage}}</span>
         </p>
+        <div>
+            Vaccination effectuée ?
+            <ng-container *ngIf="isVaccine === 'true'">
+                Oui<mat-icon >check</mat-icon>
+            </ng-container>
+            <ng-container *ngIf="isVaccine === 'false'">
+                Non<mat-icon>close</mat-icon>
+            </ng-container>
+        </div>
         <form (ngSubmit)="onSubmitInfos()" *ngIf="!editPassword">
             <mat-form-field>
                 <mat-label>Nom</mat-label>

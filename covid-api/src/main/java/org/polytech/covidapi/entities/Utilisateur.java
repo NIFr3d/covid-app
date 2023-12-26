@@ -95,6 +95,9 @@ public class Utilisateur {
     public Centre getCentre() {
         return this.centre;
     }
+    public boolean isVaccine() {
+        return this.isVaccine;
+    }
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -112,5 +115,8 @@ public class Utilisateur {
     }
     public void setCentre(Centre centre) {
         this.centre = centre;
+    }
+    public void setVaccine(boolean isVaccine) {
+        this.isVaccine = isVaccine;
     }
 }
