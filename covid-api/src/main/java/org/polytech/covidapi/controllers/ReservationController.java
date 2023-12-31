@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
+
 @RestController
 @RequestMapping(path="/api/reservation")
 public class ReservationController {
@@ -33,7 +36,7 @@ public class ReservationController {
     @Autowired
     private CentreService centreService;
 
-
+    @Counted(value = "count_reservations", description = "Compte le nombre de réservations effectuées par des utilisateurs")
     @PostMapping(path="/makeReservation")
     public ResponseEntity<?> makeReservation(@RequestBody Map<String, Object> request){
         String userEmail = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
@@ -45,6 +48,7 @@ public class ReservationController {
         return ResponseEntity.badRequest().body("{ \"message\": \"Une erreur est survenue\"}");
     }
 
+    @Timed(value = "get_reservations_week", description = "Temps pris pour récupérer les réservations d'une semaine")
     @GetMapping(path="/getReservationsFromTo")
     public ResponseEntity<?> getReservations(@RequestParam long from, @RequestParam long to, @RequestParam Integer centreId){
         List<Reservation> reservations = reservationService.getReservationsFromToByCentre(new Timestamp(from), new Timestamp(to), centreId);
@@ -98,6 +102,7 @@ public class ReservationController {
         return ResponseEntity.badRequest().body("{ \"message\": \"Une erreur est survenue\"}");
     }
 
+    @Counted(value="count_confirmedVaccinations", description="Compte le nombre de vaccinations confirmées")
     @PostMapping(path="/medecin/confirmVaccination/{id}")
     public ResponseEntity<?> confirmVaccination(@PathVariable Integer id){
         if(reservationService.confirmVaccination(id)){

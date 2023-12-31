@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.micrometer.core.annotation.Timed;
+
 @RestController
 @RequestMapping(path="/api/center")
 public class CenterController {
@@ -35,6 +37,7 @@ public class CenterController {
         return centreService.getCentresByCity(city);
     }
 
+    @Timed(value = "get_all_centres", description = "Temps pris pour récupérer tous les centres")
     @GetMapping(path = "/getAll")
     public List<Centre> getAllCentres(){
         return centreService.getAllCentres();

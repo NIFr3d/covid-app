@@ -66,6 +66,7 @@ public class SecurityConfig {
         .requestMatchers("/api/reservation/medecin").hasAnyAuthority(ERole.ADMIN.toString(), ERole.MEDECIN.toString())
         .requestMatchers("/api/reservation/**").authenticated()
         .requestMatchers("/api/**").hasAuthority(ERole.ADMIN.toString())
+        .requestMatchers("/actuator/**").permitAll()
         .anyRequest().authenticated())
         .csrf(csrf -> csrf.disable())
         .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))

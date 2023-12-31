@@ -13,6 +13,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import io.micrometer.core.aop.CountedAspect;
+import io.micrometer.core.aop.TimedAspect;
+import io.micrometer.core.instrument.MeterRegistry;
+
 @SpringBootApplication
 public class CovidApiApplication {
 	@Autowired
@@ -48,5 +52,16 @@ public class CovidApiApplication {
 			utilisateurRepository.save(superadmin);
 		};
 	}
+
+	@Bean
+	public TimedAspect timedAspect(MeterRegistry registry) {
+		return new TimedAspect(registry);
+	}
+
+	@Bean
+	public CountedAspect countedAspect(MeterRegistry registry) {
+		return new CountedAspect(registry);
+	}
+
 
 }
